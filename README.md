@@ -1,6 +1,5 @@
-<p align="center" style="margin-bottom: 20px; width: 50px; margin: auto">
-<img width="100px" src="https://brownesdairy.com.au/wp-content/uploads/2019/03/ha-g5f3L.png"/>
-</p>
+## ISV CI Test Yeoman Generator
+
 
 ## Usage
 
@@ -16,5 +15,21 @@
 1. Run the generator
 
     ```bash
-    yo yo-go <app name>
+    yo isv-ci-test <test name>
     ```
+
+
+## Development
+
+1. Link this generator to the Yeoman registry
+
+     run `npm link` in this directory
+     
+2. use Yeoman to test the generator, eg:
+    ```bash
+    cd ~/
+    yo isv-ci-test my-sample-test
+    ```
+ 
+### Tests
+Using Mocha for compatibility with Yeoman
