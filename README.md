@@ -32,4 +32,9 @@
     ```
  
 ### Tests
-Using Mocha for compatibility with Yeoman
+
+Template test is `app/index.test.js`
+
+Unit tests are included with the template, and can be exercised with `make test` which:
+  1. runs the template, building the app in `./temp/example`
+  1. runs the `bats` tests inside the example directory.

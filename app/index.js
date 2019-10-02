@@ -5,38 +5,40 @@ module.exports = class extends Generator {
         super(args, opts)
 
         this.argument("test-name", {type: String, required: true})
-        // todo: test this
         this.option("target-dir", {type: String, default: "."})
     }
 
 
     writing() {
-        console.log('\n' +
+        this.log('\n' +
             'ISV CI Test\n' +
-            '-----------\n' +
-            '\n')
+            '-----------'
+            )
 
-        console.log(this.options)
-        const testName = this.options['test-name']
+        this.testName = this.options['test-name']
             .replace(/\s+/g, '-')
             .replace(/_+/g, '-')
             .toLowerCase()
 
-        console.log("Test name: " + testName)
+        this.log(`Test name: ${this.testName}\n`)
 
         const location = this.options['target-dir'] + ((this.options['target-dir'].substr(-1) === '/') ? '' : '/')
-        const testDir = location + testName
+        this.testDir = location + this.testName
 
-        this.destinationRoot(testDir)
-
-        console.log('Generating skeleton in \'' + testDir + '\'')
+        this.destinationRoot(this.testDir)
 
         let context = {
-            testName: testName,
+            testName: this.testName,
         };
 
         [
-            "README.md"
+            "README.md",
+            "needs.json",
+            "Makefile",
+            "Dockerfile",
+            "steps.sh",
+            "steps.bats",
+            "run.sh"
         ].forEach((filename) => {
             this.fs.copyTpl(
                 this.templatePath(filename),
@@ -60,5 +62,17 @@ module.exports = class extends Generator {
         //     '\n'
         // )
 
+    }
+
+    end() {
+        this.log(`\nCreated test '${this.testName}' in '${this.testDir}'`)
+        this.log('\nTo run the skeleton:')
+        this.log(`  cd '${this.testDir}'`)
+        this.log('  GREETING_NAME="my friend" make run')
+        this.log('')
+        this.log('You should see output that contains:')
+        this.log('  section-start greet')
+        this.log('  hello my friend')
+        this.log('  section-end greet')
     }
 }

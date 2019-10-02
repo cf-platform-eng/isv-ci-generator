@@ -1,9 +1,7 @@
 FROM cfplatformeng/base-image:latest
 
-# TODO is this going to self document well? Is it too brittle?
-#ENV INPUT_DIR=/input
-#ENV OUTPUT_DIR=/input
-
+ENV INPUT_DIR=/input
+ENV OUTPUT_DIR=/input
 
 # Copy binaries from dependent images
 COPY --from=cfplatformeng/mrlog:latest          /usr/local/bin/mrlog /usr/local/bin/
