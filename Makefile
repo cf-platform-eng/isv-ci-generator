@@ -36,7 +36,7 @@ ifneq ($(YEOMAN_INSTALLED),0)
 endif
 ifeq ($(USER),root)
 	# avoid root check in Yeoman https://github.com/yeoman/yo/issues/348
-	sed -i -e '/rootCheck/d' "$(npm root -g)/yo/lib/cli.js"
+	sed -i -e '/rootCheck/d' "$$(npm root -g)/yo/lib/cli.js"
 endif
 
 deps:  deps-yeoman temp/make-tags/deps
