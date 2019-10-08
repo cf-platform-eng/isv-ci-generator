@@ -19,7 +19,7 @@ test-app-generator-result:	deps
 	cd temp && yo isv-ci test-example
 	$(MAKE) -C temp/test-example test
 
-test: lint test-app-generator-result test-app
+test: lint test-app test-app-generator-result
 
 #### deps ####
 temp/make-tags/deps: package.json
@@ -28,7 +28,7 @@ temp/make-tags/deps: package.json
 	mkdir -p temp/make-tags
 	touch temp/make-tags/deps
 
-deps: temp/make-tags/deps deps-yo
+deps:  deps-yo temp/make-tags/deps
 
 YO_INSTALLED := $(shell command -v yo 2>&1 > /dev/null; echo $$?)
 
