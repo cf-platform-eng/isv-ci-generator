@@ -7,20 +7,6 @@ TEST_SRC = $(shell find ./app -name "*.js" | grep "\.test\.")
 test-app:	deps
 	npm test
 
-#### TEST ####
-temp/make-tags/lint: deps $(SRC)
-	npm run lint
-
-lint: temp/make-tags/lint
-
-test-app-generator-result:	deps
-	mkdir -p temp
-	rm -rf temp/test-example
-	cd temp && yo --no-insight isv-ci test-example
-	$(MAKE) -C temp/test-example test
-
-test: lint test-app test-app-generator-result
-
 #### deps ####
 temp/make-tags/deps: package.json
 	npm install
@@ -40,6 +26,20 @@ ifeq ($(USER),root)
 endif
 
 deps:  deps-yeoman temp/make-tags/deps
+
+#### TEST ####
+temp/make-tags/lint: deps $(SRC)
+	npm run lint
+
+lint: temp/make-tags/lint
+
+test-app-generator-result:	deps
+	mkdir -p temp
+	rm -rf temp/test-example
+	cd temp && yo --no-insight isv-ci test-example
+	$(MAKE) -C temp/test-example test
+
+test: lint test-app test-app-generator-result
 
 #### clean ####
 clean:
