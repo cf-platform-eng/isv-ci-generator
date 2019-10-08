@@ -22,11 +22,11 @@
   "author": {
     "name": "Pivotal ISV CI team",
     "email": "cf-isv-dashboard@pivotal.io",
-    "url": "https://github.com/cf-platform-eng/isv-ci-toolkit-generator"
+    "url": "https://github.com/cf-platform-eng/isv-ci-generator"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cf-platform-eng/isv-ci-toolkit-generator"
+    "url": "https://github.com/cf-platform-eng/isv-ci-generator"
   },
   "license": "MIT",
   "devDependencies": {
