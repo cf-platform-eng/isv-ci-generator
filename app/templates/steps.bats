@@ -6,7 +6,6 @@ setup() {
     export mock_needs="$(mock_bin needs)"
     export mock_mrlog="$(mock_bin mrlog)"
     export PATH="${BIN_MOCKS}:${PATH}"
-
 }
 
 teardown() {

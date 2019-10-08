@@ -4,10 +4,6 @@
   echo -e "You must source this script\nsource ${0}" && \
   exit 1
 
-function foo {
-  exit 1
-}
-
 function requirements_check {
   mrlog section-start --name "requirements check"
 
@@ -24,8 +20,6 @@ function requirements_check {
 
   return $result
 }
-
-
 
 function log_existing_dependencies {
   mrlog section-start --name "log existing dependencies"
