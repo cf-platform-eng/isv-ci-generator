@@ -15,7 +15,9 @@
     "node": ">=6.9.0"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint app/**/*.js",
+    "lint:fix": "eslint --fix app/**/*.js"
   },
   "author": {
     "name": "Pivotal ISV CI team",
@@ -28,6 +30,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "yeoman-assert": "^3.1.1",
     "yeoman-test": "^2.0.0"
