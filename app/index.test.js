@@ -30,9 +30,9 @@ describe('isv-ci:app (test generator)', () => {
 
                 // runtime
                 assert.fileContent('run.sh', "echo \"my-test succeeded\"")
+                assert.fileContent('run.bats', "output_equals \"my-test succeeded\"")
                 assert.file('steps.sh')
-                // assert.fileContent('run.bats', "output_equals \"my-test succeeded\"")
-                 assert.file('steps.bats')
+                assert.file('steps.bats')
 
 
             })

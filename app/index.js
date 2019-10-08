@@ -38,7 +38,8 @@ module.exports = class extends Generator {
             "Dockerfile",
             "steps.sh",
             "steps.bats",
-            "run.sh"
+            "run.sh",
+            "run.bats"
         ].forEach((filename) => {
             this.fs.copyTpl(
                 this.templatePath(filename),
