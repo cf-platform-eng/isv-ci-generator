@@ -28,7 +28,14 @@ temp/make-tags/deps: package.json
 	mkdir -p temp/make-tags
 	touch temp/make-tags/deps
 
-deps: temp/make-tags/deps
+deps: temp/make-tags/deps deps-yo
+
+YO_INSTALLED := $(shell command -v yo 2>&1 > /dev/null; echo $$?)
+
+deps-yo:
+ifneq ($(YO_INSTALLED),0)
+	npm install -g yo
+endif
 
 #### clean ####
 clean:
