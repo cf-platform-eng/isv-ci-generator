@@ -16,7 +16,7 @@ lint: temp/make-tags/lint
 test-app-generator-result:	deps
 	mkdir -p temp
 	rm -rf temp/test-example
-	cd temp && yo isv-ci test-example
+	cd temp && yo --no-insight isv-ci test-example
 	$(MAKE) -C temp/test-example test
 
 test: lint test-app test-app-generator-result
