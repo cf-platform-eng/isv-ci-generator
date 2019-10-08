@@ -28,14 +28,18 @@ temp/make-tags/deps: package.json
 	mkdir -p temp/make-tags
 	touch temp/make-tags/deps
 
-deps:  deps-yo temp/make-tags/deps
+YEOMAN_INSTALLED := $(shell command -v yo 2>&1 > /dev/null; echo $$?)
 
-YO_INSTALLED := $(shell command -v yo 2>&1 > /dev/null; echo $$?)
-
-deps-yo:
-ifneq ($(YO_INSTALLED),0)
+deps-yeoman:
+ifneq ($(YEOMAN_INSTALLED),0)
 	npm install -g yo
 endif
+ifeq ($(USER),root)
+	# avoid root check in Yeoman https://github.com/yeoman/yo/issues/348
+	sed -i -e '/rootCheck/d' "$(npm root -g)/yo/lib/cli.js"
+endif
+
+deps:  deps-yeoman temp/make-tags/deps
 
 #### clean ####
 clean:
