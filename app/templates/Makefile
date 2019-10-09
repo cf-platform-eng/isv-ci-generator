@@ -1,3 +1,5 @@
+SHELL=/bin/bash
+
 # TODO phonies
 IMAGE_TAG := "<%= testName %>"
 BASH_SRC := $(shell find . -name "*.sh")
@@ -58,7 +60,7 @@ logs:
 	mkdir -p ./logs
 
 run: run-deps logs temp/make-tags/build
-	docker run \
+	set -o pipefail; docker run \
 	-e GREETING_NAME \
 	$(IMAGE_TAG) 2>&1 | tee ./logs/$(shell date "+%Y.%m.%d-%H.%M.%S").log
 
