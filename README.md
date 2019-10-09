@@ -36,7 +36,7 @@ more:
 2. use Yeoman to test the generator, eg:
     ```bash
     cd ~/
-    yo isv-ci-test my-sample-test
+    yo isv-ci my-sample-test
     ```
  
 ### Tests
