@@ -32,5 +32,7 @@ function log_existing_dependencies {
 }
 
 function greet {
-    echo "Hello ${GREETING_NAME}"
+  mrlog section-start --name greet
+  echo "Hello ${GREETING_NAME}"
+  mrlog section-end --name greet --result=0
 }
