@@ -9,7 +9,7 @@ COPY --from=cfplatformeng/needs:latest          /usr/local/bin/needs /usr/local/
 COPY --from=cfplatformeng/isv-ci-toolkit:latest /usr/local/bin/*.sh /usr/local/bin/
 
 # Log dependency versions
-ARG DEPENDENCIES_FILE=/root/dependencies.log
+ENV DEPENDENCIES_FILE=/root/dependencies.log
 # TODO: toolkit version
 RUN mrlog dependency --type binary --name mrlog --version $(mrlog version | cut -f3 -d" ") >> ${DEPENDENCIES_FILE} && \
     mrlog dependency --type binary --name needs --version $(needs --version) >> ${DEPENDENCIES_FILE}

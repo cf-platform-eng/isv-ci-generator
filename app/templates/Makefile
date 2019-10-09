@@ -59,13 +59,11 @@ logs:
 
 run: run-deps logs temp/make-tags/build
 	docker run \
-	-e DEPENDENCIES_FILE=/root/dependencies.log \
 	-e GREETING_NAME \
 	$(IMAGE_TAG) 2>&1 | tee ./logs/$(shell date "+%Y.%m.%d-%H.%M.%S").log
 
 define run-docker-interactive
 	docker run -it \
-	-e DEPENDENCIES_FILE=/root/dependencies.log \
 	-e GREETING_NAME \
 	-v ${PWD}:/test \
 	$(IMAGE_TAG) \
