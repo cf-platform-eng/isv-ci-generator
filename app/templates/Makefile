@@ -1,10 +1,14 @@
 SHELL=/bin/bash
 
+.PHONY: deps-test clean lint test build publish run shell needs-list needs-check
+
 # TODO phonies
-IMAGE_TAG := "<%= testName %>"
+IMAGE_NAME := "<%= testName %>"
 BASH_SRC := $(shell find . -name "*.sh")
 SRC := $(BASH_SRC) needs.json Dockerfile
 TEST_SRC := $(shell find . -name "*.bats")
+# DOCKER_REPO := <fill in your DOCKER_REPO>
+
 
 temp/test-helpers.bash:
 	mkdir -p temp
@@ -33,7 +37,7 @@ endif
 
 clean:
 	rm -rf temp
-	docker image rm -f $(IMAGE_TAG)
+	docker image rm -f $(IMAGE_NAME)
 	rm -rf ./logs
 
 temp/make-tags/lint: $(BASH_SRC)
@@ -49,10 +53,17 @@ temp/make-tags/test: temp/bats-mock.bash temp/test-helpers.bash $(BASH_SRC) $(TE
 test: deps-test temp/make-tags/lint temp/make-tags/test
 
 temp/make-tags/build: temp/make-tags/lint temp/make-tags/test $(SRC)
-	docker build . --tag $(IMAGE_TAG)
+	docker build . --tag $(IMAGE_NAME)
 	mkdir -p temp/make-tags && touch temp/make-tags/build
 
 build: temp/make-tags/build
+
+publish: build
+ifndef DOCKER_REPO
+	$(error "Please define DOCKER_REPO location to publish image")
+endif
+	docker tag $(IMAGE_NAME) $(DOCKER_REPO)/$(IMAGE_NAME):latest
+	docker push $(DOCKER_REPO)/$(IMAGE_NAME):latest
 
 run-deps: build
 
@@ -62,13 +73,13 @@ logs:
 run: run-deps logs temp/make-tags/build
 	set -o pipefail; docker run \
 	-e GREETING_NAME \
-	$(IMAGE_TAG) 2>&1 | tee ./logs/$(shell date "+%Y.%m.%d-%H.%M.%S").log
+	$(IMAGE_NAME) 2>&1 | tee ./logs/$(shell date "+%Y.%m.%d-%H.%M.%S").log
 
 define run-docker-interactive
 	docker run -it \
 	-e GREETING_NAME \
 	-v ${PWD}:/test \
-	$(IMAGE_TAG) \
+	$(IMAGE_NAME) \
 	$1 $2
 endef
 

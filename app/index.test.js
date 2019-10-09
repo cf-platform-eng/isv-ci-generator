@@ -23,7 +23,7 @@ describe('isv-ci:app (test generator)', () => {
                 assert.jsonFileContent('needs.json', []);
 
                 // makefile
-                assert.fileContent('Makefile', "IMAGE_TAG := \"my-test\"\n");
+                assert.fileContent('Makefile', "IMAGE_NAME := \"my-test\"\n");
 
                 // Dockerfile
                 assert.file('Dockerfile');
