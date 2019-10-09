@@ -2,7 +2,6 @@ SHELL=/bin/bash
 
 .PHONY: deps-test clean lint test build publish run shell needs-list needs-check
 
-# TODO phonies
 IMAGE_NAME := "<%= testName %>"
 BASH_SRC := $(shell find . -name "*.sh")
 SRC := $(BASH_SRC) needs.json Dockerfile
