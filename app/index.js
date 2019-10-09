@@ -47,22 +47,6 @@ module.exports = class extends Generator {
                 context
             )
         })
-
-        // this.fs.copyTpl(
-        //     this.templatePath("cmd/appname/main.go"),
-        //     this.destinationPath("cmd/" + appName + "/main.go"),
-        //     context
-        // )
-
-        // console.log(
-        //     'When done, try:\n' +
-        //     '\n' +
-        //     '  cd ' + this.destinationPath() + '\n' +
-        //     '  make\n' +
-        //     '  ./build/' + appName + '\n' +
-        //     '\n'
-        // )
-
     }
 
     end() {
