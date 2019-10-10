@@ -8,7 +8,6 @@ module.exports = class extends Generator {
         this.option("target-dir", {type: String, default: "."})
     }
 
-
     writing() {
         this.log('\n' +
             'ISV CI Test\n' +

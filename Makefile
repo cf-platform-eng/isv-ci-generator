@@ -4,7 +4,7 @@
 SRC = $(shell find ./app -name "*.js" | grep -v "\.test\.")
 TEST_SRC = $(shell find ./app -name "*.js" | grep "\.test\.")
 
-test-app:	deps
+test-app: deps
 	npm test
 
 #### deps ####
@@ -27,20 +27,59 @@ endif
 
 deps:  deps-yeoman temp/make-tags/deps
 
-#### TEST ####
+#### UNIT TESTS ####
 temp/make-tags/lint: deps $(SRC)
 	npm run lint
 
 lint: temp/make-tags/lint
 
+# TODO: make this a feature
 test-app-generator-result:	deps
 	mkdir -p temp
 	rm -rf temp/test-example
 	cd temp && yo --no-insight isv-ci test-example
 	$(MAKE) -C temp/test-example test
 
-test: lint test-app test-app-generator-result
+test-unit: lint test-app test-app-generator-result
+
+#### FEATURE TESTS ####
+FEATURE_SRC := $(shell find features -name "*.bats")
+
+features/temp/test-helpers.bash:
+	mkdir -p features/temp
+	# TODO: this does not feel right.. (but it should be versioned)
+	curl https://raw.githubusercontent.com/cf-platform-eng/isv-ci-toolkit/6c2663a08b20849a1047b6834a8feaa20e2e728f/tools/test-helpers.bash > features/temp/test-helpers.bash
+
+features/temp/bats-mock.bash:
+	mkdir -p features/temp
+	curl https://raw.githubusercontent.com/cf-platform-eng/bats-mock/master/src/bats-mock.bash > features/temp/bats-mock.bash
+
+BATS_INSTALLED := $(shell command -v bats 2>&1 > /dev/null; echo $$?)
+SHELLCHECK_INSTALLED := $(shell command -v shellcheck 2>&1 > /dev/null; echo $$?)
+
+deps-features:
+ifneq ($(BATS_INSTALLED),0)
+  $(warning 'bats' not installed. See https://github.com/bats-core/bats-core)
+  MISSING := 1
+endif
+ifneq ($(SHELLCHECK_INSTALLED),0)
+  $(warning 'shellcheck' not installed. See https://www.shellcheck.net/)
+  MISSING := 1
+endif
+ifdef MISSING
+  $(error "Please install missing dependencies")
+endif
+
+test-features: temp/make-tags/deps deps-features features/temp/bats-mock.bash features/temp/test-helpers.bash $(FEATURE_SRC)
+	# Clean out fixtures for the test
+	rm -rf features/temp/fixture
+	cd features && bats --tap *.bats
+
+#### TEST ####
+
+test: test-unit test-features
 
 #### clean ####
 clean:
-	rm -rf temp/make-tags/*
+	rm -rf temp/*
+
