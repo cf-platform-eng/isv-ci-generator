@@ -11,17 +11,26 @@ more:
 
 ## Usage
 
-1. Install yeoman, deps and link the generator
+1. Use your web browser to download `isv-ci-generator.tgz` from the latest release at https://github.com/cf-platform-eng/isv-ci-generator/releases
+
+2. Extract the tarball.
+    ```bash
+    mkdir isv-ci-generator
+    cd isv-ci-generator
+    tar xzf <path to downloaded isv-ci-generator.tgz>
+    ```
+
+3. Install yeoman and link the generator
 
     ```bash
     npm install -g yo
-    npm install
     npm link
     ```
 
-1. Run the generator
+4. Run the generator
 
     ```bash
+    cd ~
     yo isv-ci <your-test-name>
     ```
     
