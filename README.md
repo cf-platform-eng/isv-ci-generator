@@ -22,6 +22,8 @@ more:
 
 3. Install yeoman and link the generator
 
+    *In the directory you created above (eg isv-ci-generator)*
+
     ```bash
     npm install -g yo
     npm link
