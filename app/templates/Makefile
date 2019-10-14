@@ -52,7 +52,7 @@ temp/make-tags/test: temp/bats-mock.bash temp/test-helpers.bash $(BASH_SRC) $(TE
 test: deps-test temp/make-tags/lint temp/make-tags/test
 
 temp/make-tags/build: temp/make-tags/lint temp/make-tags/test $(SRC)
-	docker build . --tag $(IMAGE_NAME)
+	docker build . --pull --tag $(IMAGE_NAME)
 	mkdir -p temp/make-tags && touch temp/make-tags/build
 
 build: temp/make-tags/build
