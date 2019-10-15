@@ -11,29 +11,35 @@ more:
 
 ## Usage
 
-1. Use your web browser to download `isv-ci-generator.tgz` from the latest release at https://github.com/cf-platform-eng/isv-ci-generator/releases
+1. Gather prerequisites
+    1. You will need [NPM](https://www.npmjs.com/) installed on your computer
 
-2. Extract the tarball.
+    1. Install [Yeoman](https://yeoman.io/) if you don't have it already
+    ```bash
+    npm install -g yo
+    ```
+
+1. Install the generator.
+
+    1. [Download the latest release of `isv-ci-generator.tgz`](https://github.com/cf-platform-eng/isv-ci-generator/releases)
+
+    1. Extract the tarball to a directory. You should put this somewhere meaningful if you want to keep the generator installed.
     ```bash
     mkdir isv-ci-generator
     cd isv-ci-generator
     tar xzf <path to downloaded isv-ci-generator.tgz>
     ```
-
-3. Install yeoman and link the generator
-
-    *In the directory you created above (eg isv-ci-generator)*
-
+   
+   1. In the generator directory, link the generator to Yeoman
     ```bash
-    npm install -g yo
     npm link
-    ```
+    ```   
 
 4. Run the generator
 
     ```bash
-    cd ~
-    yo isv-ci <your-test-name>
+    cd <project parent>          
+    yo isv-ci <your-test-name>  # Test scaffold is generated in <project parent>/<your-test-name>           
     ```
     
     Follow the instructions provided by the generator to get started

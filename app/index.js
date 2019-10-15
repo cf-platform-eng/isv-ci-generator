@@ -55,8 +55,8 @@ module.exports = class extends Generator {
         this.log('  GREETING_NAME="my friend" make run')
         this.log('')
         this.log('You should see output that contains:')
-        this.log('  section-start greet')
+        this.log('  section-start \'greet\' MRL:{...}')
         this.log('  hello my friend')
-        this.log('  section-end greet')
+        this.log('  section-end \'greet\' MRL:{...}')
     }
 }
