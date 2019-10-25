@@ -77,7 +77,7 @@ test-features: temp/make-tags/deps deps-features features/temp/bats-mock.bash fe
 
 #### TEST ####
 
-test: test-unit test-features
+test: test-unit test-features test-features-go
 
 #### clean ####
 clean: clean-go

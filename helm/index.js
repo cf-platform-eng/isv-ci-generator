@@ -25,6 +25,27 @@ module.exports = class extends Generator {
         this.testDir = location + this.testName
 
         this.destinationRoot(this.testDir)
+
+        let context = {
+            testName: this.testName,
+        };
+
+        [
+            "README.md",
+            "needs.json",
+            "Makefile",
+            "Dockerfile",
+            "steps.sh",
+            "steps.bats",
+            "run.sh",
+            "run.bats"
+        ].forEach((filename) => {
+            this.fs.copyTpl(
+                this.templatePath(filename),
+                this.destinationPath(filename),
+                context
+            )
+        })        
     }
 
     end() {
