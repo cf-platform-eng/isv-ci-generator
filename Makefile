@@ -57,7 +57,7 @@ features/temp/bats-mock.bash:
 BATS_INSTALLED := $(shell command -v bats 2>&1 > /dev/null; echo $$?)
 SHELLCHECK_INSTALLED := $(shell command -v shellcheck 2>&1 > /dev/null; echo $$?)
 
-deps-features:
+deps-features: deps-go
 ifneq ($(BATS_INSTALLED),0)
   $(warning 'bats' not installed. See https://github.com/bats-core/bats-core)
   MISSING := 1
@@ -80,6 +80,35 @@ test-features: temp/make-tags/deps deps-features features/temp/bats-mock.bash fe
 test: test-unit test-features
 
 #### clean ####
-clean:
+clean: clean-go
 	rm -rf temp/*
 
+#### Goerkin feture tests ####
+
+GO-VER = go1.13
+
+# #### GO Binary Management ####
+deps-go-binary:
+	echo "Expect: $(GO-VER)" && \
+		echo "Actual: $$(go version)" && \
+	 	go version | grep $(GO-VER) > /dev/null
+
+HAS_GO_IMPORTS := $(shell command -v goimports;)
+
+deps-goimports: deps-go-binary
+ifndef HAS_GO_IMPORTS
+	go get -u golang.org/x/tools/cmd/goimports
+endif
+
+clean-go: deps-go-binary
+	rm -rf build/*
+	go clean --modcache
+
+deps-go: deps-goimports deps-go-binary
+	go mod download
+
+test-features-go: deps-go lint-go
+	ginkgo -tags feature -r features
+
+lint-go: deps-goimports
+	git ls-files | grep '.go$$' | xargs goimports -l -w
