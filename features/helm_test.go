@@ -4,9 +4,9 @@ package features_test
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/exec"
-	"io/ioutil"
 
 	. "github.com/bunniesandbeatings/goerkin"
 	. "github.com/onsi/ginkgo"
@@ -25,10 +25,10 @@ var _ = Describe("isv-ci-generator", func() {
 
 	steps.Define(func(define Definitions) {
 		var (
-			cmd        *exec.Cmd
-			output     string
-			exitError  error
-			destDir    string
+			cmd       *exec.Cmd
+			output    string
+			exitError error
+			destDir   string
 		)
 
 		AfterEach(func() {
@@ -43,15 +43,15 @@ var _ = Describe("isv-ci-generator", func() {
 		define.When(`^I run generate helm project$`, func() {
 			var err error
 			destDir, err = ioutil.TempDir("", "helm-project")
-			Expect(err).ToNot(HaveOccurred())	
-			cmd = exec.Command("yo", "isv-ci", "my-example-test", fmt.Sprintf("--target-dir=%s", destDir))
+			Expect(err).ToNot(HaveOccurred())
+			cmd = exec.Command("yo", "isv-ci:helm", "my-example-test", fmt.Sprintf("--target-dir=%s", destDir))
 			var outputBytes []byte
 			outputBytes, exitError = cmd.CombinedOutput()
 			output = string(outputBytes)
 		})
 
 		define.Then(`^It creates a helm project successfully$`, func() {
-			Expect(output).To(ContainSubstring("Successfully created my-example-test"))
+			Expect(output).To(ContainSubstring("Created helm test 'my-example-test' in"))
 			Expect(exitError).ToNot(HaveOccurred())
 			_, err := os.Stat(destDir)
 			Expect(err).ToNot(HaveOccurred())

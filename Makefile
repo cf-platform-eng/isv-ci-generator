@@ -107,7 +107,7 @@ clean-go: deps-go-binary
 deps-go: deps-goimports deps-go-binary
 	go mod download
 
-test-features-go: deps-go lint-go
+test-features-go: deps deps-go lint-go
 	ginkgo -tags feature -r features
 
 lint-go: deps-goimports
