@@ -44,7 +44,5 @@ teardown() {
     [ "$(mock_get_call_num "${log_existing_dependencies}")" = "1" ]
     [ "$(mock_get_call_args "${log_existing_dependencies}")" = "" ]
 
-    [ "$(mock_get_call_num "${greet}")" = "1" ]
-    [ "$(mock_get_call_args "${greet}")" = "" ]
     output_equals "<%= testName %> succeeded"
 }

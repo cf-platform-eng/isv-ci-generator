@@ -3,5 +3,15 @@
     "name": "DEPENDENCIES_FILE",
     "type": "environment_variable",
     "description": "location of the dependencies file generated during `docker build`"
+  },
+  {
+    "name": "KUBECONFIG",
+    "type": "environment_variable",
+    "description": "location of the kubeconfig file with context for target cluster"
+  },
+  {
+    "name": "HELM_CHART",
+    "type": "environment_variable",
+    "description": "location of the kubeconfig file with context for target cluster"
   }
 ]

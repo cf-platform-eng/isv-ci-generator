@@ -90,20 +90,3 @@ teardown() {
   output_says "section-end"
   status_equals 0
 }
-
-@test "Greets you warmly" {
-  mock_set_side_effect "${mock_mrlog}" "echo section-start" 1
-  mock_set_side_effect "${mock_mrlog}" "echo section-end" 2
-  GREETING_NAME="Mr Spot!"
-
-  run greet
-
-  [ "$(mock_get_call_num "${mock_mrlog}")" = "2" ]
-  [ "$(mock_get_call_args "${mock_mrlog}" 1)" = "section-start --name greet" ]
-  [ "$(mock_get_call_args "${mock_mrlog}" 2)" = "section-end --name greet --result=0" ]
-
-  status_equals 0
-  output_says "section-start"
-  output_says "Hello Mr Spot!"
-  output_says "section-end"
-}

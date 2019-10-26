@@ -22,8 +22,8 @@ RUN mrlog dependency --type binary --name mrlog --version $(mrlog version | cut 
     mrlog dependency --type binary --name helm --version $(helm version | sed -e 's/.*\(SemVer:".*"\), GitCommit:.*/\1/') >> ${DEPENDENCIES_FILE} 
 
 # Copy files for this test
-#COPY [ "needs.json", "run.sh", "steps.sh", "/test/" ]
-#RUN chmod a+x /test/run.sh
-#WORKDIR /test
+COPY [ "needs.json", "run.sh", "steps.sh", "/test/" ]
+RUN chmod a+x /test/run.sh
+WORKDIR /test
 
-CMD ["/bin/bash"]
+CMD ["/bin/bash", "-c", "/test/run.sh"]

@@ -30,9 +30,3 @@ function log_existing_dependencies {
   mrlog section-end --name "log existing dependencies" --result=0
   return $result
 }
-
-function greet {
-  mrlog section-start --name greet
-  echo "Hello ${GREETING_NAME}"
-  mrlog section-end --name greet --result=0
-}
