@@ -23,7 +23,7 @@ run_isolated_subject() {
 setup() {
     export requirements_check="$(mock_bin requirements_check)"
     export log_existing_dependencies="$(mock_bin log_existing_dependencies)"
-    export greet="$(mock_bin greet)"
+    export init_helm="$(mock_bin init_helm)"
     export PATH="${BIN_MOCKS}:${PATH}"
 }
 
@@ -43,6 +43,9 @@ teardown() {
 
     [ "$(mock_get_call_num "${log_existing_dependencies}")" = "1" ]
     [ "$(mock_get_call_args "${log_existing_dependencies}")" = "" ]
+
+    [ "$(mock_get_call_num "${init_helm}")" = "1" ]
+    [ "$(mock_get_call_args "${init_helm}")" = "" ]
 
     output_equals "<%= testName %> succeeded"
 }

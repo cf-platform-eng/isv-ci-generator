@@ -5,6 +5,7 @@ setup() {
   source ${BATS_TEST_DIRNAME}/steps.sh
   export mock_needs="$(mock_bin needs)"
   export mock_mrlog="$(mock_bin mrlog)"
+  export mock_helm="$(mock_bin helm)"
   export PATH="${BIN_MOCKS}:${PATH}"
 }
 
@@ -89,4 +90,37 @@ teardown() {
   output_says "The requirements in needs.json were met"
   output_says "section-end"
   status_equals 0
+}
+
+@test "Successful helm init" {
+  mock_set_side_effect "${mock_helm}" "echo helm"
+  mock_set_side_effect "${mock_mrlog}" "echo section-start" 1
+  mock_set_side_effect "${mock_mrlog}" "echo section-end" 2
+
+  run init_helm
+
+  [ "$(mock_get_call_num "${mock_helm}")" = "1" ]
+  [ "$(mock_get_call_args "${mock_helm}" 1)" = "init" ]
+  output_says "section-start"
+  output_says "helm"
+  output_says "Helm initialized!"
+  output_says "section-end"
+  status_equals 0
+}
+
+@test "Failed helm init" {
+  mock_set_status "${mock_helm}" 1
+  mock_set_side_effect "${mock_helm}" "echo helm"
+  mock_set_side_effect "${mock_mrlog}" "echo section-start" 1
+  mock_set_side_effect "${mock_mrlog}" "echo section-end" 2
+
+  run init_helm
+
+  [ "$(mock_get_call_num "${mock_helm}")" = "1" ]
+  [ "$(mock_get_call_args "${mock_helm}" 1)" = "init" ]
+  output_says "section-start"
+  output_says "helm"
+  output_says "Failed to initialize helm."
+  output_says "section-end"
+  status_equals 1
 }

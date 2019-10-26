@@ -30,3 +30,18 @@ function log_existing_dependencies {
   mrlog section-end --name "log existing dependencies" --result=0
   return $result
 }
+
+function init_helm {
+  mrlog section-start --name "install helm"
+
+  helm init
+  result=$?
+  if [[ $result -eq 0 ]] ; then
+    echo "Helm initialized!"
+  else
+    echo "Failed to initialize helm."
+  fi
+
+  mrlog section-end --name "install helm" --result=0
+  return $result
+}
