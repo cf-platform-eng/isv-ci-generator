@@ -6,6 +6,7 @@ setup() {
   export mock_needs="$(mock_bin needs)"
   export mock_mrlog="$(mock_bin mrlog)"
   export mock_helm="$(mock_bin helm)"
+  export mock_kubectl="$(mock_bin kubectl)"
   export PATH="${BIN_MOCKS}:${PATH}"
 }
 
@@ -121,6 +122,39 @@ teardown() {
   output_says "section-start"
   output_says "helm"
   output_says "Failed to initialize helm."
+  output_says "section-end"
+  status_equals 1
+}
+
+@test "Successful helm removal" {
+  mock_set_side_effect "${mock_kubectl}" "echo pkstcl"
+  mock_set_side_effect "${mock_mrlog}" "echo section-start" 1
+  mock_set_side_effect "${mock_mrlog}" "echo section-end" 2
+
+  run remove_helm
+
+  [ "$(mock_get_call_num "${mock_kubectl}")" = "1" ]
+  [ "$(mock_get_call_args "${mock_kubectl}" 1)" = "delete deployment tiller-deploy -n kube-system" ]
+  output_says "section-start"
+  output_says "pkstcl"
+  output_says "Helm removed!"
+  output_says "section-end"
+  status_equals 0
+}
+
+@test "Failed helm removal" {
+  mock_set_side_effect "${mock_kubectl}" "echo pkstcl"
+  mock_set_status "${mock_kubectl}" 1
+  mock_set_side_effect "${mock_mrlog}" "echo section-start" 1
+  mock_set_side_effect "${mock_mrlog}" "echo section-end" 2
+
+  run remove_helm
+
+  [ "$(mock_get_call_num "${mock_kubectl}")" = "1" ]
+  [ "$(mock_get_call_args "${mock_kubectl}" 1)" = "delete deployment tiller-deploy -n kube-system" ]
+  output_says "section-start"
+  output_says "pkstcl"
+  output_says "Failed to remove helm."
   output_says "section-end"
   status_equals 1
 }

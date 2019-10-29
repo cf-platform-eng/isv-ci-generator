@@ -71,14 +71,18 @@ logs:
 
 run: run-deps logs temp/make-tags/build
 	set -o pipefail; docker run \
-	-e KUBECONFIG \
-	-e HELM_CHART \
+	-e DEPENDENCIES_FILE=/root/dependencies.log \
+	-e KUBECONFIG=/input/kubeconfig \
+	-v ${KUBECONFIG}:/input/kubeconfig \
+	-v ${HELM_CHART}:/input/helm-chart \
 	$(IMAGE_NAME) 2>&1 | tee ./logs/$(shell date "+%Y.%m.%d-%H.%M.%S").log
 
 define run-docker-interactive
 	docker run -it \
-	-e KUBECONFIG \
-	-e HELM_CHART \
+	-e DEPENDENCIES_FILE=/root/dependencies.log \
+	-e KUBECONFIG=/input/kubeconfig \
+	-v ${KUBECONFIG}:/input/kubeconfig \
+	-v ${HELM_CHART}:/input/helm-chart \
 	-v ${PWD}:/test \
 	$(IMAGE_NAME) \
 	$1 $2

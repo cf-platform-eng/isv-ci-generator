@@ -73,6 +73,7 @@ var _ = Describe("isv-ci-generator", func() {
 		define.Then(`^I make run in the new project$`, func() {
 			cmd = exec.Command("make", "run")
 			cmd.Dir = path.Join(destDir, "my-example-test")
+			os.Unsetenv("KUBECONFIG")
 			var outputBytes []byte
 			outputBytes, exitError = cmd.CombinedOutput()
 			output = string(outputBytes)

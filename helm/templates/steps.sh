@@ -32,7 +32,7 @@ function log_existing_dependencies {
 }
 
 function init_helm {
-  mrlog section-start --name "install helm"
+  mrlog section-start --name "initialize helm"
 
   helm init
   result=$?
@@ -42,6 +42,22 @@ function init_helm {
     echo "Failed to initialize helm."
   fi
 
-  mrlog section-end --name "install helm" --result=0
+  mrlog section-end --name "initialize helm" --result=0
   return $result
+}
+
+function remove_helm {
+  mrlog section-start --name "remove helm"
+
+  kubectl delete deployment tiller-deploy -n kube-system 
+  result=$?
+  if [[ $result -eq 0 ]] ; then
+    echo "Helm removed!"
+  else
+    echo "Failed to remove helm."
+  fi
+
+  mrlog section-end --name "remove helm" --result=0
+  return $result
+
 }
