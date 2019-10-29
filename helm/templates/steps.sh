@@ -34,7 +34,10 @@ function log_existing_dependencies {
 function init_helm {
   mrlog section-start --name "initialize helm"
 
-  helm init
+  kubectl create serviceaccount tiller -n kube-system && \
+  kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller && \
+  helm init --service-account=tiller --wait && \
+  kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
   result=$?
   if [[ $result -eq 0 ]] ; then
     echo "Helm initialized!"
@@ -49,7 +52,9 @@ function init_helm {
 function remove_helm {
   mrlog section-start --name "remove helm"
 
-  kubectl delete deployment tiller-deploy -n kube-system 
+  kubectl delete deployment tiller-deploy -n kube-system && \
+  kubectl delete clusterrolebinding tiller && \
+  kubectl delete serviceaccount tiller -n kube-system 
   result=$?
   if [[ $result -eq 0 ]] ; then
     echo "Helm removed!"

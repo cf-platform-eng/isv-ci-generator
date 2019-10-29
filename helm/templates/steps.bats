@@ -95,15 +95,27 @@ teardown() {
 
 @test "Successful helm init" {
   mock_set_side_effect "${mock_helm}" "echo helm"
+  mock_set_side_effect "${mock_kubectl}" "echo kubectl"
   mock_set_side_effect "${mock_mrlog}" "echo section-start" 1
   mock_set_side_effect "${mock_mrlog}" "echo section-end" 2
 
   run init_helm
 
   [ "$(mock_get_call_num "${mock_helm}")" = "1" ]
-  [ "$(mock_get_call_args "${mock_helm}" 1)" = "init" ]
+  [ "$(mock_get_call_args "${mock_helm}" 1)" = "init --service-account=tiller --wait" ]
+
+  [ "$(mock_get_call_num "${mock_kubectl}")" = "3" ]
+  [ "$(mock_get_call_args "${mock_kubectl}" 1)" = "create serviceaccount tiller -n kube-system" ]
+  [ "$(mock_get_call_args "${mock_kubectl}" 2)" = "create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller" ]
+
+  echo $(mock_get_call_args "${mock_kubectl}" 3)
+  [ "$(mock_get_call_args "${mock_kubectl}" 3)" = "patch deploy --namespace kube-system tiller-deploy -p {\"spec\":{\"template\":{\"spec\":{\"serviceAccount\":\"tiller\"}}}}" ]
+
   output_says "section-start"
+  output_says "kubectl"
+  output_says "kubectl"
   output_says "helm"
+  output_says "kubectl"
   output_says "Helm initialized!"
   output_says "section-end"
   status_equals 0
@@ -112,14 +124,20 @@ teardown() {
 @test "Failed helm init" {
   mock_set_status "${mock_helm}" 1
   mock_set_side_effect "${mock_helm}" "echo helm"
+  mock_set_side_effect "${mock_kubectl}" "echo kubectl"  
   mock_set_side_effect "${mock_mrlog}" "echo section-start" 1
   mock_set_side_effect "${mock_mrlog}" "echo section-end" 2
 
   run init_helm
 
   [ "$(mock_get_call_num "${mock_helm}")" = "1" ]
-  [ "$(mock_get_call_args "${mock_helm}" 1)" = "init" ]
+  [ "$(mock_get_call_args "${mock_helm}" 1)" = "init --service-account=tiller --wait" ]
+
+  [ "$(mock_get_call_num "${mock_kubectl}")" = "2" ]
+
   output_says "section-start"
+  output_says "kubectl"
+  output_says "kubectl"
   output_says "helm"
   output_says "Failed to initialize helm."
   output_says "section-end"
@@ -133,7 +151,7 @@ teardown() {
 
   run remove_helm
 
-  [ "$(mock_get_call_num "${mock_kubectl}")" = "1" ]
+  [ "$(mock_get_call_num "${mock_kubectl}")" = "3" ]
   [ "$(mock_get_call_args "${mock_kubectl}" 1)" = "delete deployment tiller-deploy -n kube-system" ]
   output_says "section-start"
   output_says "pkstcl"
