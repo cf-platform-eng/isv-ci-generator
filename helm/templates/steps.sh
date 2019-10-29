@@ -59,5 +59,35 @@ function remove_helm {
 
   mrlog section-end --name "remove helm" --result=0
   return $result
+}
+
+function install_helm_chart {
+  mrlog section-start --name "Install helm chart"
+
+  helm install "$1" --name "$2"
+  result=$?
+  if [[ $result -eq 0 ]] ; then
+    echo "Helm chart '$1' installed!"
+  else
+    echo "Failed to install helm chart '$1'"
+  fi
+
+  mrlog section-end --name "Install helm chart" --result=0
+  return $result
+}
+
+function delete_helm_chart {
+  mrlog section-start --name "Delete helm chart"
+
+  helm delete --purge "$1"
+  result=$?
+  if [[ $result -eq 0 ]] ; then
+    echo "Helm chart instance '$1' deleted!"
+  else
+    echo "Failed to delete helm chart instance '$1'"
+  fi
+
+  mrlog section-end --name "Delete helm chart" --result=0
+  return $result
 
 }

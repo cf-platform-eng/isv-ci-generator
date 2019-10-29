@@ -24,6 +24,9 @@ setup() {
     export requirements_check="$(mock_bin requirements_check)"
     export log_existing_dependencies="$(mock_bin log_existing_dependencies)"
     export init_helm="$(mock_bin init_helm)"
+    export remove_helm="$(mock_bin remove_helm)"
+    export install_helm_chart="$(mock_bin install_helm_chart)"
+    export delete_helm_chart="$(mock_bin delete_helm_chart)"
     export PATH="${BIN_MOCKS}:${PATH}"
 }
 
@@ -46,6 +49,15 @@ teardown() {
 
     [ "$(mock_get_call_num "${init_helm}")" = "1" ]
     [ "$(mock_get_call_args "${init_helm}")" = "" ]
+
+    [ "$(mock_get_call_num "${remove_helm}")" = "1" ]
+    [ "$(mock_get_call_args "${remove_helm}")" = "" ]
+
+    [ "$(mock_get_call_num "${install_helm_chart}")" = "1" ]
+    [ "$(mock_get_call_args "${install_helm_chart}")" = "/input/helm-chart test-instance" ]
+
+    [ "$(mock_get_call_num "${delete_helm_chart}")" = "1" ]
+    [ "$(mock_get_call_args "${delete_helm_chart}")" = "test-instance" ]
 
     output_equals "<%= testName %> succeeded"
 }

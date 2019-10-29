@@ -158,3 +158,69 @@ teardown() {
   output_says "section-end"
   status_equals 1
 }
+
+@test "Install helm chart" {
+  mock_set_side_effect "${mock_helm}" "echo helm"
+  mock_set_side_effect "${mock_mrlog}" "echo section-start" 1
+  mock_set_side_effect "${mock_mrlog}" "echo section-end" 2
+
+  run install_helm_chart /my/chart instance
+
+  [ "$(mock_get_call_num "${mock_helm}")" = "1" ]
+  [ "$(mock_get_call_args "${mock_helm}" 1)" = "install /my/chart --name instance" ]
+  output_says "section-start"
+  output_says "helm"
+  output_says "Helm chart '/my/chart' installed!"
+  output_says "section-end"
+  status_equals 0
+}
+
+@test "Install helm chart fails" {
+  mock_set_side_effect "${mock_helm}" "echo helm"
+  mock_set_status "${mock_helm}" 1
+  mock_set_side_effect "${mock_mrlog}" "echo section-start" 1
+  mock_set_side_effect "${mock_mrlog}" "echo section-end" 2
+
+  run install_helm_chart /my/chart instance
+
+  [ "$(mock_get_call_num "${mock_helm}")" = "1" ]
+  [ "$(mock_get_call_args "${mock_helm}" 1)" = "install /my/chart --name instance" ]
+  output_says "section-start"
+  output_says "helm"
+  output_says "Failed to install helm chart '/my/chart'"
+  output_says "section-end"
+  status_equals 1
+}
+
+@test "Delete helm chart" {
+  mock_set_side_effect "${mock_helm}" "echo helm"
+  mock_set_side_effect "${mock_mrlog}" "echo section-start" 1
+  mock_set_side_effect "${mock_mrlog}" "echo section-end" 2
+
+  run delete_helm_chart instance
+
+  [ "$(mock_get_call_num "${mock_helm}")" = "1" ]
+  [ "$(mock_get_call_args "${mock_helm}" 1)" = "delete --purge instance" ]
+  output_says "section-start"
+  output_says "helm"
+  output_says "Helm chart instance 'instance' deleted!"
+  output_says "section-end"
+  status_equals 0
+}
+
+@test "Delete helm chart fails" {
+  mock_set_side_effect "${mock_helm}" "echo helm"
+  mock_set_status "${mock_helm}" 1
+  mock_set_side_effect "${mock_mrlog}" "echo section-start" 1
+  mock_set_side_effect "${mock_mrlog}" "echo section-end" 2
+
+  run delete_helm_chart instance
+
+  [ "$(mock_get_call_num "${mock_helm}")" = "1" ]
+  [ "$(mock_get_call_args "${mock_helm}" 1)" = "delete --purge instance" ]
+  output_says "section-start"
+  output_says "helm"
+  output_says "Failed to delete helm chart instance 'instance'"
+  output_says "section-end"
+  status_equals 1
+}
