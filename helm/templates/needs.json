@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/root/dependencies.log",
+    "type": "file",
+    "description": "The dependencies file generated during `docker build`"
+  },
+  {
+    "type": "file",
+    "path": "/input/helm-chart",
+    "description": "The helm chart to test should exist"
+  },
+  {
+    "type": "file",
+    "path": "/input/kubeconfig",
+    "description": "The kubeconfig file should exist"
+  },
+  {
+    "name": "KUBECONFIG",
+    "type": "environment_variable",
+    "description": "Location of kubeconfig file - should be set to /input/kubeconfig"
+  }
+]
