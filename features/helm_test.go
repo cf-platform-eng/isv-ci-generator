@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"path/filepath"
 
 	. "github.com/bunniesandbeatings/goerkin"
 	. "github.com/onsi/ginkgo"
@@ -28,8 +29,15 @@ var _ = Describe("isv-ci-generator", func() {
 		Scenario("fails when missing parameters", func() {
 			steps.Given("I run generate helm project")
 			steps.Then("It creates a helm project successfully")
-			steps.Then("I make run in the new project")
+			steps.Then("I make run in the new project without a helm chart")
 			steps.Then("make run fails with unsatisfied needs")
+		})
+
+		Scenario("succeeds with valid helm chart", func() {
+			steps.Given("I run generate helm project")
+			steps.Then("It creates a helm project successfully")
+			steps.Then("I make run in the new project with helm chart")
+			steps.Then("make run succeeds")
 		})
 	})
 
@@ -72,7 +80,7 @@ var _ = Describe("isv-ci-generator", func() {
 			Expect(err).ToNot(HaveOccurred())
 		})
 
-		define.Then(`^I make run in the new project$`, func() {
+		define.Then(`^I make run in the new project without a helm chart$`, func() {
 			cmd = exec.Command("make", "run")
 			cmd.Dir = path.Join(destDir, "my-example-test")
 			os.Unsetenv("HELM_CHART")
@@ -81,9 +89,25 @@ var _ = Describe("isv-ci-generator", func() {
 			output = string(outputBytes)
 		})
 
+		define.Then(`^I make run in the new project with helm chart$`, func() {
+			cmd = exec.Command("make", "run")
+			cmd.Dir = path.Join(destDir, "my-example-test")
+			helmChart, err := filepath.Abs("./fixtures/charts/mysql")
+			Expect(err).ToNot(HaveOccurred())
+			cmd.Env = append(os.Environ(), fmt.Sprintf("HELM_CHART=%s", helmChart))
+			var outputBytes []byte
+			outputBytes, exitError = cmd.CombinedOutput()
+			output = string(outputBytes)
+		})
+
 		define.Then(`^make run fails with unsatisfied needs$`, func() {
 			Expect(output).To(ContainSubstring("The requirements in needs.json were not completely met"))
 			Expect(exitError).To(HaveOccurred())
+		})
+
+		define.Then(`^make run succeeds$`, func() {
+			Expect(output).To(ContainSubstring("my-example-test succeeded"))
+			Expect(exitError).ToNot(HaveOccurred())
 		})
 	})
 })
