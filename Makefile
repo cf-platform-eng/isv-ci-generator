@@ -4,7 +4,7 @@
 SRC = $(shell find ./app -name "*.js" | grep -v "\.test\.")
 TEST_SRC = $(shell find ./app -name "*.js" | grep "\.test\.")
 
-test-app: deps
+test-js: deps
 	npm test
 
 #### deps ####
@@ -40,7 +40,7 @@ test-app-generator-result:	deps
 	cd temp && yo --no-insight isv-ci test-example
 	$(MAKE) -C temp/test-example test
 
-test-unit: lint test-app
+test-unit: lint test-js
 
 #### FEATURE TESTS ####
 FEATURE_SRC := $(shell find features -name "*.bats")
