@@ -40,7 +40,7 @@ test-app-generator-result:	deps
 	cd temp && yo --no-insight isv-ci test-example
 	$(MAKE) -C temp/test-example test
 
-test-unit: lint test-app test-app-generator-result
+test-unit: lint test-app
 
 #### FEATURE TESTS ####
 FEATURE_SRC := $(shell find features -name "*.bats")
@@ -70,7 +70,7 @@ ifdef MISSING
   $(error "Please install missing dependencies")
 endif
 
-test-features: temp/make-tags/deps deps-features features/temp/bats-mock.bash features/temp/test-helpers.bash $(FEATURE_SRC)
+test-features: test-app-generator-result temp/make-tags/deps deps-features features/temp/bats-mock.bash features/temp/test-helpers.bash $(FEATURE_SRC)
 	# Clean out fixtures for the test
 	rm -rf features/temp/fixture
 	cd features && bats --tap *.bats
@@ -78,6 +78,14 @@ test-features: temp/make-tags/deps deps-features features/temp/bats-mock.bash fe
 #### TEST ####
 
 test: test-unit test-features test-features-go
+
+test-app: test-unit test-app-features
+
+test-app-features: test-features
+
+test-helm: test-unit test-helm-features
+
+test-helm-features: test-features-go
 
 #### clean ####
 clean: clean-go
