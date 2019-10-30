@@ -64,7 +64,9 @@ var _ = Describe("isv-ci-generator", func() {
 		})
 
 		define.Then(`^It creates a helm project successfully$`, func() {
-			Expect(output).To(ContainSubstring("Created helm test 'my-example-test' in"))
+			Expect(output).To(ContainSubstring(fmt.Sprintf("Created helm test 'my-example-test' in '%s/my-example-test'", destDir)))
+			Expect(output).To(ContainSubstring(fmt.Sprintf("See '%s/my-example-test/README.md' for pre-requisites.", destDir)))
+			Expect(output).To(ContainSubstring("To run the test:"))
 			Expect(exitError).ToNot(HaveOccurred())
 			_, err := os.Stat(path.Join(destDir, "my-example-test"))
 			Expect(err).ToNot(HaveOccurred())
@@ -73,7 +75,7 @@ var _ = Describe("isv-ci-generator", func() {
 		define.Then(`^I make run in the new project$`, func() {
 			cmd = exec.Command("make", "run")
 			cmd.Dir = path.Join(destDir, "my-example-test")
-			os.Unsetenv("KUBECONFIG")
+			os.Unsetenv("HELM_CHART")
 			var outputBytes []byte
 			outputBytes, exitError = cmd.CombinedOutput()
 			output = string(outputBytes)

@@ -8,6 +8,7 @@ SRC := $(BASH_SRC) needs.json Dockerfile
 TEST_SRC := $(shell find . -name "*.bats")
 # DOCKER_REPO := <fill in your DOCKER_REPO>
 
+KUBECONFIG ?= ~/.kube/config
 
 temp/test-helpers.bash:
 	mkdir -p temp

@@ -50,7 +50,8 @@ module.exports = class extends Generator {
 
     end() {
         this.log(`\nCreated helm test '${this.testName}' in '${this.testDir}'`)
-        this.log('\nTo run the skeleton:')
+        this.log(`\nSee '${this.testDir}/README.md' for pre-requisites.`)
+        this.log('\nTo run the test:')
         this.log(`  cd '${this.testDir}'`)
         this.log('  make run')
         this.log('')
