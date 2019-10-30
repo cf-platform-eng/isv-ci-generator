@@ -1,4 +1,4 @@
-.PHONY: test-app test-app-generator-result test deps clean
+.PHONY: test-app test-app-generator-result test deps clean test-app test-app-features test-helm test-helm-features deps-go-binary
 
 #### BUILDS ####
 SRC = $(shell find ./app -name "*.js" | grep -v "\.test\.")
@@ -57,7 +57,7 @@ features/temp/bats-mock.bash:
 BATS_INSTALLED := $(shell command -v bats 2>&1 > /dev/null; echo $$?)
 SHELLCHECK_INSTALLED := $(shell command -v shellcheck 2>&1 > /dev/null; echo $$?)
 
-deps-features: deps-go
+deps-features: 
 ifneq ($(BATS_INSTALLED),0)
   $(warning 'bats' not installed. See https://github.com/bats-core/bats-core)
   MISSING := 1
