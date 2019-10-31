@@ -40,7 +40,7 @@ test-app-generator-result:	deps
 	cd temp && yo --no-insight isv-ci test-example
 	$(MAKE) -C temp/test-example test
 
-test-unit: lint test-js
+test-unit: lint test-js lint-go
 
 #### FEATURE TESTS ####
 FEATURE_SRC := $(shell find features -name "*.bats")
@@ -115,7 +115,7 @@ clean-go: deps-go-binary
 deps-go: deps-goimports deps-go-binary
 	go mod download
 
-test-features-go: deps deps-go lint-go
+test-features-go: deps deps-go
 	ginkgo -tags feature -r features
 
 lint-go: deps-goimports
