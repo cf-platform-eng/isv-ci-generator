@@ -39,7 +39,7 @@ Your helm chart should get installed and then uninstalled on the targeted cluste
 
 ## Modifying the test
 
-Now that you've run the test once, you probably want to modify it to do something beyond just installing your chart.
+Now that you've run the test once, you probably want to modify it to do something beyond just installing your chart. 
 
 The file `run.sh` is the test script. It looks like this:
 
@@ -62,4 +62,4 @@ if ! remove_helm; then exit; fi
 echo "<%= testName %> succeeded"
 ```
 
-You can modify this test script and then ru-run `make run` to exercise the new test.
+You can modify this test script and then ru-run `make run` to exercise the new test. An example test is documented [here](../../docs/customize-test.md).

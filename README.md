@@ -36,12 +36,16 @@ more:
     ```   
 
 4. Run the generator
-
+- To generate a simple hello world test:
     ```bash
-    cd <project parent>          
-    yo isv-ci <your-test-name>  # Test scaffold is generated in <project parent>/<your-test-name>           
+    cd <project parent> 
+    yo isv-ci <your-test-name> # Test scaffold is generated in <project parent>/<your-test-name> 
     ```
-    
+- To generate a [helm chart install/uninstall](./helm/templates/README.md) test:
+    ```bash
+    cd <project parent> 
+    yo isv-ci:helm <your-test-name> # Test scaffold for helm test is generated in <project parent>/<your-test-name> 
+    ```    
     Follow the instructions provided by the generator to get started
 
 ## Development
@@ -50,16 +54,14 @@ more:
 
      run `npm link` in this directory
      
-2. use Yeoman to test the generator, eg:
+2. use Yeoman to test the generator. To generate a simple hello world test:
     ```bash
-    cd ~/
     yo isv-ci my-sample-test
     ```
- 
 ### Tests
 
 Template test is `app/index.test.js`
 
 Unit tests are included with the template, and can be exercised with `make test` which:
   1. runs the template, building the app in `./temp/example`
-  1. runs the `bats` tests inside the example directory.
+  2. runs the `bats` tests inside the example directory.
