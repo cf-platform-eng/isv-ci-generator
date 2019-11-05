@@ -1,4 +1,4 @@
-# Customizing A Test
+# Customizing The Default Helm Test
 
 The [helm yeoman generator](../README.md) generates a test script that installs the chart and then uninstalls the resulting instance. This document will guide you through expanding a test to better validate the system installed by the helm chart.
 
