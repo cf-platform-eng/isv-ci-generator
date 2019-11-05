@@ -1,6 +1,6 @@
 # Customizing A Test
 
-The [helm yeoman generator](../README.md) generates a test script that installs the chart and then uninstalls the installed instance. This document will guide you through expanding a test to better validate the system installed by the helm chart.
+The [helm yeoman generator](../README.md) generates a test script that installs the chart and then uninstalls the resulting instance. This document will guide you through expanding a test to better validate the system installed by the helm chart.
 
 ## Assumptions
 
@@ -42,7 +42,7 @@ The [helm yeoman generator](../README.md) generates a test script that installs 
   ```
 
 ## Testing The Mysql Chart
-Now you should be ready to generate a test scaffold and modify the test. The mysql (`~/example/charts/stable/mysql`) chart will be used for this exercise.
+Now you should be ready to generate a test scaffold and modify the test. The mysql chart (`~/example/charts/stable/mysql`) will be used for this exercise.
 
 - Generate the test scaffold
   ```bash
@@ -82,7 +82,7 @@ To connect to your database:
 3. Connect using the mysql cli, then provide your password:
     $ mysql -h test-instance-mysql -p
 ```
-These instructions will be used to modify the test and include those steps.
+In the following steps, those instructions will be used to enhance the test.
 
 ### The Default Test Script
 
@@ -236,7 +236,7 @@ test and can be leveraged in a build pipeline or by other developers.
 ## Some Helpful Hints
 
 ### If The Test Fails And Leaves The Chart and/or Helm Installed
-If the tests fail along the way, the chart and helm will still be installed in the cluster, and re-running the test will result if failures. To cleanup:
+If the tests fail along the way, the chart and helm will still be installed in the cluster, and re-running the test will result in failures. To cleanup:
 ```bash
 $ source ./steps.sh
 $ delete_helm_chart test-instance
@@ -255,4 +255,4 @@ Remove `temp/make-tags/lint temp/make-tags/test` from the line so it looks like 
 temp/make-tags/build: $(SRC)
 ```
 
-No the tests won't run every time the image is built. You may still run the tests with `make test`
+Now the tests won't run every time the image is built. You may still run the tests with `make test`

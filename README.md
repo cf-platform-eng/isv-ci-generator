@@ -46,7 +46,7 @@ more:
     cd <project parent> 
     yo isv-ci:helm <your-test-name> # Test scaffold for helm test is generated in <project parent>/<your-test-name> 
     ```    
-    Follow the instructions provided by the generator to get started
+    Follow the instructions provided by the generator to get started. Instructions to enhance the default test can be found [here](./docs/customize-test.md)
 
 ## Development
 
