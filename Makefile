@@ -10,7 +10,16 @@ test-js: deps
 	npm test
 
 #### deps ####
-temp/make-tags/deps: package.json
+deps-yeoman:
+ifneq ($(YEOMAN_INSTALLED),0)
+	npm install yo -g
+endif
+ifeq ($(USER),root)
+	# avoid root check in Yeoman https://github.com/yeoman/yo/issues/348
+	sed -i -e '/rootCheck/d' "$$(npm root -g)/yo/lib/cli.js"
+endif
+
+temp/make-tags/deps: deps-yeoman package.json
 	npm install
 	npm link
 	mkdir -p temp/make-tags
@@ -18,16 +27,7 @@ temp/make-tags/deps: package.json
 
 YEOMAN_INSTALLED := $(shell command -v yo 2>&1 > /dev/null; echo $$?)
 
-deps-yeoman:
-ifneq ($(YEOMAN_INSTALLED),0)
-	npm install -g yo
-endif
-ifeq ($(USER),root)
-	# avoid root check in Yeoman https://github.com/yeoman/yo/issues/348
-	sed -i -e '/rootCheck/d' "$$(npm root -g)/yo/lib/cli.js"
-endif
-
-deps:  deps-yeoman temp/make-tags/deps
+deps: temp/make-tags/deps
 
 #### UNIT TESTS ####
 temp/make-tags/lint: deps $(SRC)
