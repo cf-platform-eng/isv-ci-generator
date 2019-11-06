@@ -1,4 +1,4 @@
-.PHONY: test-app test-app-generator-result test deps clean test-app test-app-features test-helm test-helm-features deps-go-binary
+.PHONY: test-skeleton test-skeleton-generator-result test deps clean test-skeleton test-skeleton-features test-helm test-helm-features deps-go-binary
 
 #### BUILDS ####
 SRC = $(shell find ./app -name "*.js" | grep -v "\.test\.")
@@ -36,8 +36,6 @@ lint: temp/make-tags/lint
 test-unit: lint test-js lint-go
 
 #### FEATURE TESTS ####
-FEATURE_SRC := $(shell find features -name "*.bats")
-
 features/temp/test-helpers.bash:
 	mkdir -p features/temp
 	# TODO: this does not feel right.. (but it should be versioned)
@@ -50,7 +48,7 @@ features/temp/bats-mock.bash:
 BATS_INSTALLED := $(shell command -v bats 2>&1 > /dev/null; echo $$?)
 SHELLCHECK_INSTALLED := $(shell command -v shellcheck 2>&1 > /dev/null; echo $$?)
 
-deps-features: 
+deps-features: temp/make-tags/deps features/temp/bats-mock.bash features/temp/test-helpers.bash
 ifneq ($(BATS_INSTALLED),0)
   $(warning 'bats' not installed. See https://github.com/bats-core/bats-core)
   MISSING := 1
@@ -63,22 +61,23 @@ ifdef MISSING
   $(error "Please install missing dependencies")
 endif
 
-test-features: temp/make-tags/deps deps-features features/temp/bats-mock.bash features/temp/test-helpers.bash $(FEATURE_SRC)
-	# Clean out fixtures for the test
+remove-generated-projects:
 	rm -rf features/temp/fixture
-	cd features && bats --tap *.bats
+
+test-skeleton-features: deps-features
+	cd features && bats --tap skeleton.bats
 
 #### TEST ####
 
-test: test-unit test-features test-features-go
+# This target is necessary to speed up our feature tests
+# This stops the timestamps being regenerated and causing
+# the dockerfile to be rebuilt
 
-test-app: test-unit test-app-features
-
-test-app-features: test-features
+test-skeleton: test-unit test-skeleton-features
 
 test-helm: test-unit test-helm-features
 
-test-helm-features: test-features-go
+test: test-unit test-helm-features test-skeleton-features
 
 #### clean ####
 clean: clean-go
@@ -108,7 +107,7 @@ clean-go: deps-go-binary
 deps-go: deps-goimports deps-go-binary
 	go mod download
 
-test-features-go: deps deps-go
+test-helm-features: deps deps-go
 	ginkgo -tags feature -r features
 
 lint-go: deps-goimports
