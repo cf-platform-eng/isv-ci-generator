@@ -27,7 +27,7 @@ temp/make-tags/deps: package.json
 	mkdir -p temp/make-tags
 	touch temp/make-tags/deps
 
-deps: temp/make-tags/deps
+deps: temp/make-tags/deps deps-yeoman
 
 #### UNIT TESTS ####
 temp/make-tags/lint: deps $(SRC)
