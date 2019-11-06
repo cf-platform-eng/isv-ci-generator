@@ -1,4 +1,6 @@
-.PHONY: test-skeleton test-skeleton-generator-result test deps clean test-skeleton test-skeleton-features test-helm test-helm-features deps-go-binary
+.PHONY: test-skeleton test-skeleton-features
+.PHONY: test-helm test-helm-features
+.PHONY: deps clean test
 
 #### BUILDS ####
 SRC = $(shell find ./app -name "*.js" | grep -v "\.test\.")
@@ -33,7 +35,7 @@ temp/make-tags/lint: deps $(SRC)
 
 lint: temp/make-tags/lint
 
-test-unit: lint test-js lint-go
+test-unit: lint test-js
 
 #### FEATURE TESTS ####
 features/temp/test-helpers.bash:
@@ -64,8 +66,11 @@ endif
 remove-generated-projects:
 	rm -rf features/temp/fixture
 
-test-skeleton-features: deps-features
+test-skeleton-features: deps-features remove-generated-projects
 	cd features && bats --tap skeleton.bats
+
+test-helm-features: deps-features remove-generated-projects
+	cd features && bats --tap helm.bats
 
 #### TEST ####
 
@@ -80,35 +85,5 @@ test-helm: test-unit test-helm-features
 test: test-unit test-helm-features test-skeleton-features
 
 #### clean ####
-clean: clean-go
+clean:
 	rm -rf temp/*
-
-#### Goerkin feture tests ####
-
-GO-VER = go1.13
-
-# #### GO Binary Management ####
-deps-go-binary:
-	echo "Expect: $(GO-VER)" && \
-		echo "Actual: $$(go version)" && \
-	 	go version | grep $(GO-VER) > /dev/null
-
-HAS_GO_IMPORTS := $(shell command -v goimports;)
-
-deps-goimports: deps-go-binary
-ifndef HAS_GO_IMPORTS
-	go get -u golang.org/x/tools/cmd/goimports
-endif
-
-clean-go: deps-go-binary
-	rm -rf build/*
-	go clean --modcache
-
-deps-go: deps-goimports deps-go-binary
-	go mod download
-
-test-helm-features: deps deps-go
-	ginkgo -tags feature -r features
-
-lint-go: deps-goimports
-	git ls-files | grep '.go$$' | xargs goimports -l -w
