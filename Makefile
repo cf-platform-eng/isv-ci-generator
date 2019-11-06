@@ -10,6 +10,8 @@ test-js: deps
 	npm test
 
 #### deps ####
+YEOMAN_INSTALLED := $(shell command -v yo 2>&1 > /dev/null; echo $$?)
+
 deps-yeoman:
 ifneq ($(YEOMAN_INSTALLED),0)
 	npm install yo -g
@@ -19,13 +21,11 @@ ifeq ($(USER),root)
 	sed -i -e '/rootCheck/d' "$$(npm root -g)/yo/lib/cli.js"
 endif
 
-temp/make-tags/deps: deps-yeoman package.json
+temp/make-tags/deps: package.json
 	npm install
 	npm link
 	mkdir -p temp/make-tags
 	touch temp/make-tags/deps
-
-YEOMAN_INSTALLED := $(shell command -v yo 2>&1 > /dev/null; echo $$?)
 
 deps: temp/make-tags/deps
 
