@@ -15,7 +15,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("isv-ci-generator", func() {
+var _ = Describe("isv-ci-generator:helm", func() {
 	steps := NewSteps()
 
 	Describe("helm test generator", func() {
