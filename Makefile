@@ -33,13 +33,6 @@ temp/make-tags/lint: deps $(SRC)
 
 lint: temp/make-tags/lint
 
-# TODO: make this a feature
-test-app-generator-result:	deps
-	mkdir -p temp
-	rm -rf temp/test-example
-	cd temp && yo --no-insight isv-ci test-example
-	$(MAKE) -C temp/test-example test
-
 test-unit: lint test-js lint-go
 
 #### FEATURE TESTS ####
@@ -70,7 +63,7 @@ ifdef MISSING
   $(error "Please install missing dependencies")
 endif
 
-test-features: test-app-generator-result temp/make-tags/deps deps-features features/temp/bats-mock.bash features/temp/test-helpers.bash $(FEATURE_SRC)
+test-features: temp/make-tags/deps deps-features features/temp/bats-mock.bash features/temp/test-helpers.bash $(FEATURE_SRC)
 	# Clean out fixtures for the test
 	rm -rf features/temp/fixture
 	cd features && bats --tap *.bats
