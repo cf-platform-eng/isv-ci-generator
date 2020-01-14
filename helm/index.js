@@ -46,6 +46,12 @@ module.exports = class extends Generator {
                 context
             )
         })        
+         this.fs.copyTpl(
+                this.templatePath("_gitignore"),
+                this.destinationPath(".gitignore"),
+                context
+            )
+
     }
 
     end() {
