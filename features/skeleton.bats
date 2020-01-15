@@ -14,7 +14,6 @@ setup() {
 
 }
 
-
 @test "Happy path" {
     cd "${FEATURE_FIXTURE_DIR}/skeleton-project"
 
@@ -23,7 +22,6 @@ setup() {
     output_says "Hello happy"
     status_equals 0
 }
-
 
 @test "Fails if GREETING_NAME not provided" {
     unset GREETING_NAME

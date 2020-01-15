@@ -17,7 +17,8 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint app/**/*.js",
-    "lint:fix": "eslint --fix app/**/*.js"
+    "lint:fix": "eslint --fix app/**/*.js",
+    "smoke-test": "cucumber-js tile-install-uninstall"
   },
   "author": {
     "name": "Pivotal ISV CI team",
@@ -30,6 +31,8 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "chai": "^4.2.0",
+    "cucumber": "^6.0.5",
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "yeoman-assert": "^3.1.1",
