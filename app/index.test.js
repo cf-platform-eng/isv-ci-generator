@@ -5,7 +5,7 @@ const path = require('path')
 describe('isv-ci:app (test generator)', () => {
 
     it('underscores and spaces become dasherized', () => {
-        return helpers.run(path.join(__dirname, '../app'))
+        return helpers.run(path.join(__dirname, '.'))
             .withArguments(['my badly_named test'])
             .then(() => {
                 assert.fileContent('README.md', /# my-badly-named-test/)
