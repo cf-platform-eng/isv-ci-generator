@@ -45,7 +45,7 @@ function init_helm {
     echo "Failed to initialize helm."
   fi
 
-  mrlog section-end --name "initialize helm" --result=0
+  mrlog section-end --name "initialize helm" --result=$result
   return $result
 }
 
