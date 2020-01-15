@@ -68,6 +68,8 @@ module.exports = class extends Generator {
         this.log('\nTo run the test:')
         this.log(`  cd '${this.testDir}'`)
         this.log('  make run')
+        this.log(`\n'make run' will prompt for required configuration`)
+        this.log(`'make run' is logged to '${this.testDir}/logs/'`)
         this.log('')
     }
 }

@@ -71,6 +71,6 @@ When(/^I run the test$/, {timeout: ONE_HOUR}, function (done) {
 })
 
 Then(/^I see that the tile installed and uninstalled$/, function () {
-    expect(this.testOutput).to.contain("section-end: 'tile install' result: 0")
-    expect(this.testOutput).to.contain("section-end: 'tile uninstall' result: 0")
+    expect(this.testOutput).to.contain("section-end: 'install tile' result: 0")
+    expect(this.testOutput).to.contain("section-end: 'uninstall tile' result: 0")
 })
