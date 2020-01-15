@@ -37,6 +37,10 @@ lint: temp/make-tags/lint
 
 test-unit: lint test-js
 
+#### SMOKE TESTS ####
+smoke: temp/make-tags/deps
+	npm run smoke-test
+
 #### FEATURE TESTS ####
 features/temp/test-helpers.bash:
 	mkdir -p features/temp
