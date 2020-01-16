@@ -1,16 +1,16 @@
-ARG MARMAN_VERSION=latest
-ARG OM_VERSION=latest
-ARG PIVNET_VERSION=latest
-ARG TILEINSPECT_VERSION=latest
-ARG CF_VERSION=latest
-ARG ISV_CI_TOOLKIT_VERSION=latest
-ARG BASE_IMAGE_VERSIOn=latest
+ARG MARMAN_VERSION=0.3.0
+ARG OM_VERSION=4.4.1
+ARG PIVNET_VERSION=0.0.78
+ARG TILEINSPECT_VERSION=0.5.7
+ARG CF_VERSION=6.49.0
+ARG ISV_CI_TOOLKIT_VERSION=0.0.22
+ARG BASE_IMAGE_VERSIOn=0.0.12
 
 FROM cfplatformeng/marman:${MARMAN_VERSION} as marman
 FROM cfplatformeng/om:${OM_VERSION} as om
 FROM cfplatformeng/pivnet:${PIVNET_VERSION} as pivnet
 FROM cfplatformeng/tileinspect:${TILEINSPECT_VERSION} as tileinspect
-FROM cfplatformeng/cf:${ISV_CI_TOOLKIT_VERSION} as cf
+FROM cfplatformeng/cf:${CF_VERSION} as cf
 FROM cfplatformeng/isv-ci-toolkit:${ISV_CI_TOOLKIT_VERSION} as toolkit
 
 FROM cfplatformeng/base-image:latest
