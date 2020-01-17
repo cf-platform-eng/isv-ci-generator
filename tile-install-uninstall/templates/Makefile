@@ -1,5 +1,5 @@
 .PHONY: tile-path tile-config-path tile-config
-
+VERSION ?= latest
 SRC := $(shell find . -name "*.sh") needs.json Dockerfile
 
 <% if (dockerRepo == "") { -%>
@@ -44,8 +44,8 @@ endif
 runtime-deps: tile-path tile-config-path
 
 publish: build
-	docker tag $(IMAGE_NAME) $(DOCKER_REPO)/$(IMAGE_NAME):latest
-	docker push $(DOCKER_REPO)/$(IMAGE_NAME):latest
+	docker tag $(IMAGE_NAME) $(DOCKER_REPO)/$(IMAGE_NAME):${VERSION}
+	docker push $(DOCKER_REPO)/$(IMAGE_NAME):${VERSION}
 
 run: runtime-deps build logs
 	docker run \
