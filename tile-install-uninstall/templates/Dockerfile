@@ -4,7 +4,7 @@ ARG PIVNET_VERSION=0.0.78
 ARG TILEINSPECT_VERSION=0.5.7
 ARG CF_VERSION=6.49.0
 ARG ISV_CI_TOOLKIT_VERSION=0.0.22
-ARG BASE_IMAGE_VERSIOn=0.0.12
+ARG BASE_IMAGE_VERSION=0.0.19
 
 FROM cfplatformeng/marman:${MARMAN_VERSION} as marman
 FROM cfplatformeng/om:${OM_VERSION} as om
@@ -13,7 +13,7 @@ FROM cfplatformeng/tileinspect:${TILEINSPECT_VERSION} as tileinspect
 FROM cfplatformeng/cf:${CF_VERSION} as cf
 FROM cfplatformeng/isv-ci-toolkit:${ISV_CI_TOOLKIT_VERSION} as toolkit
 
-FROM cfplatformeng/base-image:latest
+FROM cfplatformeng/base-image:${BASE_IMAGE_VERSION}
 
 # Copy binaries from dependent images
 COPY --from=marman         /usr/local/bin/marman        /usr/local/bin/
