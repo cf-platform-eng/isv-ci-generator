@@ -21,7 +21,7 @@
     "smoke-test": "cucumber-js tile-install-uninstall"
   },
   "author": {
-    "name": "Pivotal ISV CI team",
+    "name": "VMWare Tanzu ISV CI team",
     "email": "cf-isv-dashboard@pivotal.io",
     "url": "https://github.com/cf-platform-eng/isv-ci-generator"
   },
