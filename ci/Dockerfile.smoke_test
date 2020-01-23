@@ -3,5 +3,5 @@ FROM amidos/dcind:2.0.0
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
     apk update && \
-    apk add bats libc6-compat nodejs npm shellcheck
+    apk add bats jq libc6-compat nodejs npm shellcheck
 COPY --from=marman /usr/local/bin/marman /usr/local/bin/
