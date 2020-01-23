@@ -38,7 +38,7 @@ lint: temp/make-tags/lint
 test-unit: lint test-js
 
 #### SMOKE TESTS ####
-smoke: temp/make-tags/deps
+smoke: deps
 	npm run smoke-test
 
 #### FEATURE TESTS ####
