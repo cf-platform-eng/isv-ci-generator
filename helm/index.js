@@ -29,6 +29,7 @@ module.exports = class extends Generator {
 
         let context = {
             testName: this.testName,
+            dockerRepo: this.options['docker-repo']
         };
 
         [
