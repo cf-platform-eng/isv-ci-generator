@@ -6,6 +6,7 @@ module.exports = class extends Generator {
 
         this.argument("test-name", { type: String, required: true })
         this.option("target-dir", { type: String, default: "." })
+        this.option("docker-repo", {type: String, default: ""})
     }
 
     writing() {
@@ -36,9 +37,7 @@ module.exports = class extends Generator {
             "Makefile",
             "Dockerfile",
             "steps.sh",
-            "steps.bats",
-            "run.sh",
-            "run.bats"
+            "run.sh"
         ].forEach((filename) => {
             this.fs.copyTpl(
                 this.templatePath(filename),
