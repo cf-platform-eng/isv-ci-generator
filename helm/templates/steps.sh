@@ -4,14 +4,14 @@
   echo -e "You must source this script\nsource ${0}" && \
   exit 1
 
-function requirements_check {
+function check_needs {
   mrlog section --name="check needs" \
     --on-failure="Needs check indicated one or more needs were not satisfied" \
     --on-success="Needs check successfully found all the requirements for this test" \
     -- needs check
 }
 
-function log_existing_dependencies {
+function show_image_dependencies {
   mrlog section --name="show image dependencies" -- cat /root/dependencies.log
 }
 
