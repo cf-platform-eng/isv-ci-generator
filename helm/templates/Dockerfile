@@ -1,8 +1,5 @@
-FROM cfplatformeng/base-image:latest
-
-# Copy binaries from dependent images
-COPY --from=cfplatformeng/mrlog:latest          /usr/local/bin/mrlog /usr/local/bin/
-COPY --from=cfplatformeng/needs:latest          /usr/local/bin/needs /usr/local/bin/
+ARG BASE_IMAGE_VERSION=0.0.19
+FROM cfplatformeng/base-image:${BASE_IMAGE_VERSION}
 
 RUN apt-get update && apt-get install -y apt-transport-https && \
     curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
@@ -16,14 +13,11 @@ RUN curl -LO https://git.io/get_helm.sh && \
 
 # Log dependency versions
 ARG DEPENDENCIES_FILE=/root/dependencies.log
-RUN mrlog dependency --type binary --name mrlog --version $(mrlog version | cut -f3 -d" ") >> ${DEPENDENCIES_FILE} && \
-    mrlog dependency --type binary --name needs --version $(needs --version) >> ${DEPENDENCIES_FILE} && \
-    mrlog dependency --type binary --name kubectl --version $(kubectl version | sed -e 's/.*\(GitVersion:".*"\), GitCommit:.*/\1/') >> ${DEPENDENCIES_FILE} && \
+RUN mrlog dependency --type binary --name kubectl --version $(kubectl version | sed -e 's/.*\(GitVersion:".*"\), GitCommit:.*/\1/') >> ${DEPENDENCIES_FILE} && \
     mrlog dependency --type binary --name helm --version $(helm version | sed -e 's/.*\(SemVer:".*"\), GitCommit:.*/\1/') >> ${DEPENDENCIES_FILE} 
 
 # Copy files for this test
-COPY [ "needs.json", "run.sh", "steps.sh", "/test/" ]
-RUN chmod a+x /test/run.sh
-WORKDIR /test
+COPY [ "needs.json", "run.sh", "steps.sh", "${JOB_DIR}/" ]
 
-CMD ["/bin/bash", "-c", "/test/run.sh"]
+# source the steps.sh commands, to simplify interactive development.
+RUN ["/bin/bash", "-c", "echo \"\nsource ${JOB_DIR}/steps.sh\n\" >> ~/.bashrc"]
