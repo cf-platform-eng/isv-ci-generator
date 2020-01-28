@@ -6,6 +6,7 @@ module.exports = class extends Generator {
 
         this.argument("test-name", {type: String, required: true})
         this.option("target-dir", {type: String, default: "."})
+        this.option("docker-repo", {type: String, default: ""})
     }
 
     writing() {
@@ -26,23 +27,34 @@ module.exports = class extends Generator {
 
         this.destinationRoot(this.testDir)
 
+        let files = [
+            ["Dockerfile", "Dockerfile"],
+            ["steps.sh", "steps.sh"],
+            ["needs.json", "needs.json"]
+        ]
+
+        files.forEach(([src, dst]) => {
+            this.fs.copy(
+                this.templatePath(src),
+                this.destinationPath(dst),
+            )
+        })
+
         let context = {
             testName: this.testName,
+            dockerRepo: this.options['docker-repo']
         };
 
-        [
-            "README.md",
-            "needs.json",
-            "Makefile",
-            "Dockerfile",
-            "steps.sh",
-            "steps.bats",
-            "run.sh",
-            "run.bats"
-        ].forEach((filename) => {
+        let templateFiles = [
+            ["run.sh", "run.sh"],
+            ["README.md", "README.md"],
+            ["Makefile", "Makefile"]
+        ]
+
+        templateFiles.forEach(([src, dst]) => {
             this.fs.copyTpl(
-                this.templatePath(filename),
-                this.destinationPath(filename),
+                this.templatePath(src),
+                this.destinationPath(dst),
                 context
             )
         })

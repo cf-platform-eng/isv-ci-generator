@@ -4,31 +4,15 @@
   echo -e "You must source this script\nsource ${0}" && \
   exit 1
 
-function requirements_check {
-  mrlog section-start --name "requirements check"
-
-  needs check
-  result=$?
-
-  if [[ $result -eq 0 ]] ; then
-    echo "The requirements in needs.json were met"
-  else
-    echo "The requirements in needs.json were not completely met"
-  fi
-
-  mrlog section-end --name "requirements check" --result=1
-
-  return $result
+function show_image_dependencies() {
+  mrlog section --name="show image dependencies" -- cat /root/dependencies.log
 }
 
-function log_existing_dependencies {
-  mrlog section-start --name "log existing dependencies"
-
-  cat "${DEPENDENCIES_FILE}"
-  result=$?
-
-  mrlog section-end --name "log existing dependencies" --result=0
-  return $result
+function check_needs() {
+  mrlog section --name="check needs" \
+    --on-failure="Needs check indicated one or more needs were not satisfied" \
+    --on-success="Needs check successfully found all the requirements for this test" \
+    -- needs check
 }
 
 function greet {

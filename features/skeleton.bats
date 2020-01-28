@@ -11,7 +11,6 @@ setup() {
         run yo isv-ci skeleton-project --target-dir="${FEATURE_FIXTURE_DIR}"
         status_equals 0
     fi
-
 }
 
 @test "Happy path" {
@@ -29,6 +28,6 @@ setup() {
     cd "${FEATURE_FIXTURE_DIR}/skeleton-project"
 
     run make run
-    output_says "The requirements in needs.json were not completely met"
+    output_says "Needs check indicated one or more needs were not satisfied"
     status_equals 2
 }

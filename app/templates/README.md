@@ -9,7 +9,7 @@ and logs output in the form of:
 
 For more information see the [ISV-CI Test Toolkit]()
 
-# Running for the first time
+## Running for the first time
 
 If you execute:
 
@@ -17,7 +17,7 @@ If you execute:
 
 You should see:
 
-```
+```text
 section-start greet
 hello my friend
 section-end greet

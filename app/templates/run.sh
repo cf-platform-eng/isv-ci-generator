@@ -2,8 +2,8 @@
 
 source ./steps.sh
 
-if ! requirements_check; then exit 1; fi
-if ! log_existing_dependencies; then exit 1; fi
-if ! greet; then exit 1; fi
+check_needs             || exit 1
+show_image_dependencies || exit 1
+greet                   || exit 1
 
 echo "<%= testName %> succeeded"
