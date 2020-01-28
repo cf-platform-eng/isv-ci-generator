@@ -52,15 +52,10 @@ features/temp/bats-mock.bash:
 	curl https://raw.githubusercontent.com/cf-platform-eng/bats-mock/master/src/bats-mock.bash > features/temp/bats-mock.bash
 
 BATS_INSTALLED := $(shell command -v bats 2>&1 > /dev/null; echo $$?)
-SHELLCHECK_INSTALLED := $(shell command -v shellcheck 2>&1 > /dev/null; echo $$?)
 
-deps-features: temp/make-tags/deps features/temp/bats-mock.bash features/temp/test-helpers.bash
+deps-features: deps features/temp/bats-mock.bash features/temp/test-helpers.bash
 ifneq ($(BATS_INSTALLED),0)
   $(warning 'bats' not installed. See https://github.com/bats-core/bats-core)
-  MISSING := 1
-endif
-ifneq ($(SHELLCHECK_INSTALLED),0)
-  $(warning 'shellcheck' not installed. See https://www.shellcheck.net/)
   MISSING := 1
 endif
 ifdef MISSING
