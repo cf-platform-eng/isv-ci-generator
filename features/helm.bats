@@ -26,7 +26,7 @@ setup() {
     cd "${FEATURE_FIXTURE_DIR}/helm-project"
 
     run make run
-    output_says "The requirements in needs.json were not completely met"
+    output_says "Needs check indicated one or more needs were not satisfied"
     status_equals 2
 }
 
