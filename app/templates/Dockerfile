@@ -1,4 +1,4 @@
-ARG BASE_IMAGE_VERSION=0.0.19
+ARG BASE_IMAGE_VERSION=0.0.23
 FROM cfplatformeng/base-image:${BASE_IMAGE_VERSION}
 
 # Copy files for this app

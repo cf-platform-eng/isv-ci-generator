@@ -1,4 +1,4 @@
-ARG BASE_IMAGE_VERSION=0.0.19
+ARG BASE_IMAGE_VERSION=0.0.23
 FROM cfplatformeng/base-image:${BASE_IMAGE_VERSION}
 
 RUN apt-get update && apt-get install -y apt-transport-https && \
