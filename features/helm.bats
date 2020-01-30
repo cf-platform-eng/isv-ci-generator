@@ -26,7 +26,7 @@ setup() {
     cd "${FEATURE_FIXTURE_DIR}/helm-project"
 
     run make run
-    output_says "Needs check indicated one or more needs were not satisfied"
+    output_says "HELM_CHART not defined. Set this with the full path to your 'helm install'able chart"
     status_equals 2
 }
 
