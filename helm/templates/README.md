@@ -10,9 +10,7 @@ For more information see the [ISV-CI Test Toolkit]()
 
 ## Targeting a cluster
 
-A kubernetes cluster is required to run the test. Credentials to connect to the cluster are contained in a kubeconfig file (usually at `~/.kube/config`.) The cluster referenced by the current context will be used to run the test. The command `kubectl config current-context` will show the cluster currently targeted. 
-
-If you have an alternate kubeconfig file, use the environment variable `KUBECONFIG` to specify it. If it is not specified, the default `~/.kube/config` will be used.
+A kubernetes cluster is required to run the test. Credentials to connect to the cluster are contained in a kubeconfig file (usually at `~/.kube/config`). Specify the path to the kubeconfig file you want to use in the `KUBECONFIG` environment variable. The cluster referenced by the current context will be used to run the test. The command `kubectl --kubeconfig=$KUBECONFIG config current-context` will show the cluster currently targeted.
 
 ### Cluster requirements
 
