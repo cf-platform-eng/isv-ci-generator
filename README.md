@@ -3,11 +3,12 @@
 This is a [Yeoman Generator](https://yeoman.io/) that generates a scaffold which contains just enough
 to get you (our valued partner) started with your own ISV-CI tests.
 
-Currently there is one scaffold, the default, which is a simple 'Hello World'. We plan to add at least two
-more:
-1. `tile`, which will install and uninstall your tile, just like our [pre-canned version](https://github.com/cf-platform-eng/isv-ci-toolkit/tree/master/tests/install-uninstall-pas-tile)
+Current scaffolds include:
+
+* `app`, which is a simple 'Hello World' example. 
+* `tile`, which will install and uninstall your tile, just like our [pre-canned version](https://github.com/cf-platform-eng/isv-ci-toolkit/tree/master/tests/install-uninstall-pas-tile)
   that you can expand with your own custom tests.
-1. `helm`, which will install and test a helm chart. This is pending the creation of a pre-canned version. 
+* `helm`, which will install and test a helm chart. This is pending the creation of a pre-canned version. 
 
 ## Usage
 
@@ -52,7 +53,7 @@ more:
 
 1. Link this generator to the Yeoman registry
 
-     run `npm link` in this directory
+    run `npm link` in this directory
      
 2. use Yeoman to test the generator. To generate a simple hello world test:
     ```bash
