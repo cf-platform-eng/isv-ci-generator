@@ -41,25 +41,5 @@ Your helm chart should get installed and then uninstalled on the targeted cluste
 
 Now that you've run the test once, you probably want to modify it to do something beyond just installing your chart. 
 
-The file `run.sh` is the test script. It looks like this:
-
-```bash
-#!/usr/bin/env bash
-
-source ./steps.sh
-
-if ! requirements_check; then exit 1; fi
-if ! log_existing_dependencies; then exit 1; fi
-if ! init_helm; then exit; fi
-if ! install_helm_chart /input/helm-chart test-instance; then exit; fi
-
-# The helm chart is now installed with the instance named 'test-instance'
-# Add your test steps here.
-
-if ! delete_helm_chart test-instance; then exit; fi
-if ! remove_helm; then exit; fi
-
-echo "<%= testName %> succeeded"
-```
-
-You can modify this test script and then ru-run `make run` to exercise the new test. An example test is documented [here](../../docs/customize-test.md).
+The file `run.sh` is the test script.
+You can modify this test script and then re-run `make run` to exercise the new test. An example test is documented [here](../../docs/customize-test.md).
