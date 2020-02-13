@@ -48,7 +48,7 @@ publish: build
 	docker push $(DOCKER_REPO)/$(IMAGE_NAME):${VERSION}
 
 run: runtime-deps build logs
-	docker run \
+	set -o pipefail; docker run \
 	-e OM_USERNAME \
 	-e OM_PASSWORD \
 	-e OM_TARGET \
