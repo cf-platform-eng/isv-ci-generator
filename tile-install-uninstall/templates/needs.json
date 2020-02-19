@@ -1,24 +1,28 @@
 [{
-    "type": "environment_variable",
-    "name": "OM_TARGET",
-    "description": "The OpsManager hostname"
-}, {
-    "type": "environment_variable",
-    "name": "OM_USERNAME",
-    "description": "Username for OpsManager"
-}, {
-    "type": "environment_variable",
-    "name": "OM_PASSWORD",
-    "description": "Password for OpsManager"
-}, {
-    "type": "environment_variable",
-    "name": "OM_SKIP_SSL_VALIDATION",
-    "description": "Password for OpsManager",
-    "optional": true
+    "type": "and",
+    "needs": [{
+            "type": "environment_variable",
+            "name": "OM_TARGET",
+            "description": "The OpsManager hostname"
+        }, {
+            "type": "environment_variable",
+            "name": "OM_USERNAME",
+            "description": "The username for connecting to OpsManager"
+        }, {
+            "type": "environment_variable",
+            "name": "OM_PASSWORD",
+            "description": "The password for connecting to OpsManager"
+        }, {
+            "type": "environment_variable",
+            "name": "OM_SKIP_SSL_VALIDATION",
+            "description": "Should certificate validation be skipped (set to true if using self-signed certificates)",
+            "optional": true
+        }
+    ]
 }, {
     "type": "environment_variable",
     "name": "PIVNET_TOKEN",
-    "description": "A token (legacy or refresh) for the Pivotal Network for downloading any required stemcells",
+    "description": "A token (legacy or refresh) for the Pivotal Network for downloading any missing required stemcells",
     "optional": true
 }, {
     "type": "file",
@@ -27,5 +31,5 @@
 }, {
     "type": "file",
     "path": "/input/config.json",
-    "description": "The tile config to apply to the test tile"
+    "description": "The OpsManager configuration properties to apply to the tile"
 }]
