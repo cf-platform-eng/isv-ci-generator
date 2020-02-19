@@ -6,9 +6,6 @@
 SRC = $(shell find ./app -name "*.js" | grep -v "\.test\.")
 TEST_SRC = $(shell find ./app -name "*.js" | grep "\.test\.")
 
-test-js: deps
-	npm test
-
 #### deps ####
 YEOMAN_INSTALLED := $(shell command -v yo 2>&1 > /dev/null; echo $$?)
 
@@ -34,6 +31,9 @@ temp/make-tags/lint: deps $(SRC)
 	npm run lint
 
 lint: temp/make-tags/lint
+
+test-js: deps
+	npm test
 
 test-unit: lint test-js
 

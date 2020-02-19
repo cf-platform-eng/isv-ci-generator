@@ -5,7 +5,7 @@ module.exports = class extends Generator {
         super(args, opts)
 
         this.argument("test-name", { type: String, required: true })
-        this.option("target-dir", { type: String, default: "." })
+        this.option("target-dir", { type: String, default: process.cwd() })
         this.option("docker-repo", {type: String, default: ""})
     }
 
@@ -51,7 +51,6 @@ module.exports = class extends Generator {
                 this.destinationPath(".gitignore"),
                 context
             )
-
     }
 
     end() {
