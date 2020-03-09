@@ -9,7 +9,7 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "yeoman-generator": "^4.6.0"
+    "yeoman-generator": "^4.7.0"
   },
   "engines": {
     "node": ">=6.9.0"
