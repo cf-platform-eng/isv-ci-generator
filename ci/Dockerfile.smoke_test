@@ -1,4 +1,4 @@
-FROM cfplatformeng/marman:0.3.0 AS marman
+FROM cfplatformeng/marman:0.4.0 AS marman
 FROM amidos/dcind:2.0.0
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
