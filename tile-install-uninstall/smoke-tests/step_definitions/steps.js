@@ -4,6 +4,9 @@ const {expect} = require("chai")
 const fs = require("fs").promises
 const path = require("path")
 
+const TEST_TILE_SLUG="z-pe-test-pas-tile"
+const TEST_TILE_VERSION="0.3.49"
+
 Before(async function () {
     this.tmpDir = await fs.mkdtemp(path.join(process.cwd(), "temp", "smoke-test-dir-"), {recursive: true})
 })
@@ -32,7 +35,7 @@ Given(/^an environment is configured$/, function () {
 const ONE_MINUTE = 60 * 1000
 Given(/^I have an app\-only tile$/, {timeout: ONE_MINUTE}, function (done) {
     expect(process.env).to.include.key("PIVNET_TOKEN")
-    exec(`marman download-tile --slug z-pe-test-pas-tile --version 0.3.38`, {
+    exec(`marman download-tile --slug ${TEST_TILE_SLUG} --version ${TEST_TILE_VERSION}`, {
         cwd: this.tmpDir
     }, (err, stdout, stderr) => {
         if (err != null) {
@@ -56,7 +59,7 @@ Given(/^I have a working config file for my app\-only tile$/, async function () 
 
 const ONE_HOUR = 60 * 60 * 1000
 When(/^I run the test$/, {timeout: ONE_HOUR}, function (done) {
-    process.env.TILE_PATH = path.join(this.tmpDir, "z-pe-test-pas-tile-0.3.38.pivotal")
+    process.env.TILE_PATH = path.join(this.tmpDir, `${TEST_TILE_SLUG}-${TEST_TILE_VERSION}.pivotal`)
     process.env.TILE_CONFIG_PATH = this.configFilePath
 
     exec(`make run`, {
