@@ -1,4 +1,4 @@
-FROM cfplatformeng/base-image:0.0.23
+FROM cfplatformeng/base-image:0.0.27
 
 RUN apt-get update && apt-get install -y apt-transport-https && \
     curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
