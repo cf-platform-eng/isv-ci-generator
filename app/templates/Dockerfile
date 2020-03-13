@@ -1,4 +1,4 @@
-FROM cfplatformeng/base-image:0.0.23
+FROM cfplatformeng/base-image:0.0.27
 
 COPY [ "needs.json", "run.sh", "steps.sh", "${JOB_DIR}/" ]
 RUN chmod a+x ${JOB_DIR}/run.sh
