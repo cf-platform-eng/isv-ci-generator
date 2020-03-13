@@ -1,5 +1,4 @@
-ARG BASE_IMAGE_VERSION=0.0.23
-FROM cfplatformeng/base-image:${BASE_IMAGE_VERSION}
+FROM cfplatformeng/base-image:0.0.23
 
 RUN apt-get update && apt-get install -y apt-transport-https && \
     curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
@@ -12,7 +11,6 @@ RUN curl -LO https://git.io/get_helm.sh && \
     ./get_helm.sh
 
 # Log dependency versions
-ARG DEPENDENCIES_FILE=/root/dependencies.log
 RUN mrlog dependency --type binary --name kubectl --version $(kubectl version | sed -e 's/.*\(GitVersion:".*"\), GitCommit:.*/\1/') >> ${DEPENDENCIES_FILE} && \
     mrlog dependency --type binary --name helm --version $(helm version | sed -e 's/.*\(SemVer:".*"\), GitCommit:.*/\1/') >> ${DEPENDENCIES_FILE} 
 

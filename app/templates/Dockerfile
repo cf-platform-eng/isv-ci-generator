@@ -1,6 +1,4 @@
-ARG BASE_IMAGE_VERSION=0.0.23
-FROM cfplatformeng/base-image:${BASE_IMAGE_VERSION}
+FROM cfplatformeng/base-image:0.0.23
 
-# Copy files for this app
 COPY [ "needs.json", "run.sh", "steps.sh", "${JOB_DIR}/" ]
 RUN chmod a+x ${JOB_DIR}/run.sh
