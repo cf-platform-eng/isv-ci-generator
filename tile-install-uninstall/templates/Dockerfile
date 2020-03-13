@@ -5,7 +5,7 @@ FROM cfplatformeng/tileinspect:0.5.8 as tileinspect
 FROM cfplatformeng/cf:6.49.0 as cf
 FROM cfplatformeng/isv-ci-toolkit:0.0.22 as toolkit
 
-FROM cfplatformeng/base-image:0.0.27
+FROM cfplatformeng/base-image:0.0.29
 
 # Copy binaries from dependent images
 COPY --from=marman         /usr/local/bin/marman        /usr/local/bin/
