@@ -6,6 +6,7 @@ FROM cfplatformeng/cf:6.49.0 as cf
 FROM cfplatformeng/isv-ci-toolkit:0.0.22 as toolkit
 
 FROM cfplatformeng/base-image:0.0.29
+ARG DEPENDENCIES_FILE=/root/dependencies.log
 
 # Copy binaries from dependent images
 COPY --from=marman         /usr/local/bin/marman        /usr/local/bin/

@@ -1,4 +1,5 @@
 FROM cfplatformeng/base-image:0.0.29
+ARG DEPENDENCIES_FILE=/root/dependencies.log
 
 RUN apt-get update && apt-get install -y apt-transport-https && \
     curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
