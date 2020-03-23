@@ -1,4 +1,4 @@
-FROM cfplatformeng/base-image:0.0.29
+FROM cfplatformeng/base-image:0.0.30
 ARG DEPENDENCIES_FILE=/root/dependencies.log
 
 RUN apt-get update && apt-get install -y apt-transport-https && \
