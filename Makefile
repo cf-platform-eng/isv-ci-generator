@@ -66,10 +66,10 @@ remove-generated-projects:
 	rm -rf features/temp/fixture
 
 test-skeleton-features: deps-features remove-generated-projects
-	cd features && bats --tap skeleton.bats
+	bats --tap features/skeleton.bats
 
 test-helm-features: deps-features remove-generated-projects
-	cd features && bats --tap helm.bats
+	PRINT_LOGS=true bats --tap features/helm.bats
 
 #### TEST ####
 

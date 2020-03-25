@@ -13,13 +13,11 @@ setup() {
     fi
 }
 
-
-@test "Happy path" {
-    cd "${FEATURE_FIXTURE_DIR}/helm-project"
-
-    export HELM_CHART="${BATS_TEST_DIRNAME}/fixtures/charts/mysql"
-    run make run
-    status_equals 0
+teardown() {
+    if [[ "${PRINT_LOGS}" == "true" ]] ; then
+        becho "Printing log file..."
+        cat ${FEATURE_FIXTURE_DIR}/helm-project/logs/*.log >&3
+    fi
 }
 
 @test "Missing HELM_CHART" {
@@ -30,3 +28,10 @@ setup() {
     status_equals 2
 }
 
+@test "Happy path" {
+    cd "${FEATURE_FIXTURE_DIR}/helm-project"
+
+    export HELM_CHART="${BATS_TEST_DIRNAME}/fixtures/charts/mysql"
+    run make run
+    status_equals 0
+}
