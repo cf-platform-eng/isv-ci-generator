@@ -14,9 +14,9 @@ setup() {
 }
 
 teardown() {
-    if [[ "${PRINT_LOGS}" == "true" ]] ; then
+    if [[ "${PRINT_LOGS}" == "true" && -f "${FEATURE_FIXTURE_DIR}/helm-project/logs/*.log" ]] ; then
         becho "Printing log file..."
-        cat ${FEATURE_FIXTURE_DIR}/helm-project/logs/*.log >&3
+        cat "${FEATURE_FIXTURE_DIR}/helm-project/logs/*.log" >&3
     fi
 }
 
