@@ -29,7 +29,7 @@ Given(/^no helm chart is given$/, function () {
 })
 
 Given(/^a helm chart is given$/, function () {
-    process.env["HELM_CHART"] = path.join(process.cwd(), "..", "features", "fixtures", "charts", "mysql")
+    process.env["HELM_CHART"] = path.join(process.cwd(), "features", "fixtures", "charts", "mysql")
 })
 
 const ONE_HOUR = 60 * 60 * 1000
