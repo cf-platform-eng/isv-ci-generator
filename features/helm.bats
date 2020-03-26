@@ -16,7 +16,7 @@ setup() {
 teardown() {
     if [[ "${PRINT_LOGS}" == "true" ]] ; then
         becho "Printing log file..."
-        find ${FEATURE_FIXTURE_DIR}/helm-project/logs -type f -print -exec cat {} >&3 \;
+        find ${FEATURE_FIXTURE_DIR}/helm-project -type f -name "*.log" -print -exec cat {} >&3 \;
     fi
 }
 
