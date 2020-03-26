@@ -12,8 +12,8 @@ RUN curl -LO https://git.io/get_helm.sh && \
     ./get_helm.sh
 
 # Log dependency versions
-RUN mrlog dependency --type binary --name kubectl --version $(kubectl version | sed -e 's/.*\(GitVersion:".*"\), GitCommit:.*/\1/') >> ${DEPENDENCIES_FILE} && \
-    mrlog dependency --type binary --name helm --version $(helm version | sed -e 's/.*\(SemVer:".*"\), GitCommit:.*/\1/') >> ${DEPENDENCIES_FILE} 
+RUN mrlog dependency --type binary --name kubectl --version $(kubectl version --client --short | sed -e 's/Client Version: //') >> ${DEPENDENCIES_FILE} && \
+    mrlog dependency --type binary --name helm --version $(helm version --short) >> ${DEPENDENCIES_FILE}
 
 # Copy files for this test
 COPY [ "needs.json", "run.sh", "steps.sh", "${JOB_DIR}/" ]
