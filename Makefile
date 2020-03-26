@@ -68,8 +68,8 @@ remove-generated-projects:
 test-skeleton-features: deps-features remove-generated-projects
 	bats --tap features/skeleton.bats
 
-test-helm-features: deps-features remove-generated-projects
-	PRINT_LOGS=true bats --tap features/helm.bats
+test-helm-features: deps remove-generated-projects
+	npm run helm-test
 
 #### TEST ####
 
