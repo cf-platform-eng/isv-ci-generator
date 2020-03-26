@@ -18,41 +18,6 @@ function show_image_dependencies {
     -- cat /root/dependencies.log
 }
 
-#function init_helm {
-#  mrlog section-start --name "initialize helm"
-#
-#  kubectl create serviceaccount tiller -n kube-system && \
-#  kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller && \
-#  helm init --service-account=tiller --wait && \
-#  kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
-#  result=$?
-#  if [[ $result -eq 0 ]] ; then
-#    echo "Helm initialized!"
-#  else
-#    echo "Failed to initialize helm."
-#  fi
-#
-#  mrlog section-end --name "initialize helm" --result=$result
-#  return $result
-#}
-
-#function remove_helm {
-#  mrlog section-start --name "remove helm"
-#
-#  kubectl delete deployment tiller-deploy -n kube-system && \
-#  kubectl delete clusterrolebinding tiller && \
-#  kubectl delete serviceaccount tiller -n kube-system
-#  result=$?
-#  if [[ $result -eq 0 ]] ; then
-#    echo "Helm removed!"
-#  else
-#    echo "Failed to remove helm."
-#  fi
-#
-#  mrlog section-end --name "remove helm" --result=0
-#  return $result
-#}
-
 function install_helm_chart {
   mrlog section \
     --name "Install helm chart" \
