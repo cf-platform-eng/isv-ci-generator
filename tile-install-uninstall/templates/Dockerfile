@@ -5,7 +5,7 @@ FROM cfplatformeng/tileinspect:0.5.8 as tileinspect
 FROM cfplatformeng/cf:6.51.0 as cf
 FROM cfplatformeng/isv-ci-toolkit:0.0.22 as toolkit
 
-FROM cfplatformeng/base-image:0.0.33
+FROM cfplatformeng/base-image:0.0.34
 ARG DEPENDENCIES_FILE=/root/dependencies.log
 
 # Copy binaries from dependent images
