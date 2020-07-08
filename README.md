@@ -6,7 +6,7 @@ to get you (our valued partner) started with your own ISV-CI tests.
 Current scaffolds include:
 
 * `app`, which is a simple 'Hello World' example. 
-* `tile`, which will install and uninstall your tile, just like our [pre-canned version](https://github.com/cf-platform-eng/isv-ci-toolkit/tree/master/tests/install-uninstall-pas-tile)
+* `tile`, which will install and uninstall your tile, just like our [pre-canned version](https://github.com/cf-platform-eng/isv-ci-toolkit/tree/main/tests/install-uninstall-pas-tile)
   that you can expand with your own custom tests.
 * `helm`, which will install and test a helm chart. This is pending the creation of a pre-canned version. 
 
