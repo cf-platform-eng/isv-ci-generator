@@ -49,7 +49,7 @@ features/temp/test-helpers.bash:
 
 features/temp/bats-mock.bash:
 	mkdir -p features/temp
-	curl https://raw.githubusercontent.com/cf-platform-eng/bats-mock/master/src/bats-mock.bash > features/temp/bats-mock.bash
+	curl https://raw.githubusercontent.com/cf-platform-eng/bats-mock/main/src/bats-mock.bash > features/temp/bats-mock.bash
 
 BATS_INSTALLED := $(shell command -v bats 2>&1 > /dev/null; echo $$?)
 
