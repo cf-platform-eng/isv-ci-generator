@@ -3,7 +3,7 @@ FROM cfplatformeng/om:4.8.0 as om
 FROM cfplatformeng/pivnet:1.0.4 as pivnet
 FROM cfplatformeng/tileinspect:0.5.8 as tileinspect
 FROM cfplatformeng/cf:7.0.1 as cf
-FROM cfplatformeng/isv-ci-toolkit:0.0.22 as toolkit
+FROM cfplatformeng/isv-ci-toolkit:0.0.23 as toolkit
 
 FROM cfplatformeng/base-image:0.0.37
 ARG DEPENDENCIES_FILE=/root/dependencies.log
