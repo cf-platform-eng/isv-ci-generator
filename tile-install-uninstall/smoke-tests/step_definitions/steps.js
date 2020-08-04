@@ -35,7 +35,7 @@ Given(/^an environment is configured$/, function () {
 const ONE_MINUTE = 60 * 1000
 Given(/^I have an app\-only tile$/, {timeout: ONE_MINUTE}, function (done) {
     expect(process.env).to.include.key("PIVNET_TOKEN")
-    exec(`marman download-tile --slug ${TEST_TILE_SLUG} --version ${TEST_TILE_VERSION}`, {
+    exec(`marman tanzu-network-download --slug ${TEST_TILE_SLUG} --version ${TEST_TILE_VERSION}`, {
         cwd: this.tmpDir
     }, (err, stdout, stderr) => {
         if (err != null) {
