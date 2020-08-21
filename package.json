@@ -35,7 +35,7 @@
     "chai": "^4.2.0",
     "cucumber": "^6.0.5",
     "eslint": "^7.7.0",
-    "jest": "^26.4.0",
+    "jest": "^26.4.1",
     "yeoman-assert": "^3.1.1",
     "yeoman-test": "^3.0.0"
   }
