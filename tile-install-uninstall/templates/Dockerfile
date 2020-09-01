@@ -1,5 +1,5 @@
 FROM cfplatformeng/marman:0.4.3 as marman
-FROM cfplatformeng/om:6.1.2 as om
+FROM cfplatformeng/om:6.2.0 as om
 FROM cfplatformeng/pivnet:1.0.4 as pivnet
 FROM cfplatformeng/tileinspect:0.5.8 as tileinspect
 FROM cfplatformeng/cf:7.0.2 as cf
