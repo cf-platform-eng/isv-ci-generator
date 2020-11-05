@@ -1,4 +1,4 @@
-FROM cfplatformeng/base-image:0.0.43
+FROM cfplatformeng/base-image:0.0.44
 
 # Install kubectl
 RUN apt-get update && apt-get install -y apt-transport-https && \
