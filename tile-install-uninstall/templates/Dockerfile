@@ -1,6 +1,6 @@
 FROM cfplatformeng/marman:0.4.4 as marman
 FROM cfplatformeng/om:6.5.0 as om
-FROM cfplatformeng/pivnet:2.0.1 as pivnet
+FROM cfplatformeng/pivnet:2.0.2 as pivnet
 FROM cfplatformeng/tileinspect:0.5.10 as tileinspect
 FROM cfplatformeng/cf:7.1.0 as cf
 FROM cfplatformeng/isv-ci-toolkit:0.0.24 as toolkit
