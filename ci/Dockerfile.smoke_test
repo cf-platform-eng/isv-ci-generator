@@ -1,5 +1,5 @@
-FROM harbor-repo.vmware.com/partner_engineering/marman:0.4.5 AS marman
-FROM harbor-repo.vmware.com/dockerhub-proxy-cache/amidos/dcind:2.1.0
+FROM us-west1-docker.pkg.dev/isv-tile-partners/partner-engineering/marman:0.4.5 AS marman
+FROM mirror.gcr.io/amidos/dcind:2.1.0
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
     apk update && \

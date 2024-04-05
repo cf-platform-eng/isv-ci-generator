@@ -1,11 +1,11 @@
-FROM harbor-repo.vmware.com/partner_engineering/marman:0.4.4 as marman
-FROM harbor-repo.vmware.com/partner_engineering/om:7.1.2 as om
-FROM harbor-repo.vmware.com/partner_engineering/pivnet:2.0.2 as pivnet
-FROM harbor-repo.vmware.com/partner_engineering/tileinspect:0.5.10 as tileinspect
-FROM harbor-repo.vmware.com/partner_engineering/cf:7.2.0 as cf
-FROM harbor-repo.vmware.com/partner_engineering/isv-ci-toolkit:0.0.24 as toolkit
+FROM us-west1-docker.pkg.dev/isv-tile-partners/partner-engineering/marman:0.4.4 as marman
+FROM us-west1-docker.pkg.dev/isv-tile-partners/partner-engineering/om:7.1.2 as om
+FROM us-west1-docker.pkg.dev/isv-tile-partners/partner-engineering/pivnet:2.0.2 as pivnet
+FROM us-west1-docker.pkg.dev/isv-tile-partners/partner-engineering/tileinspect:0.5.10 as tileinspect
+FROM us-west1-docker.pkg.dev/isv-tile-partners/partner-engineering/cf:7.2.0 as cf
+FROM us-west1-docker.pkg.dev/isv-tile-partners/partner-engineering/isv-ci-toolkit:0.0.24 as toolkit
 
-FROM harbor-repo.vmware.com/partner_engineering/base-image:0.0.45
+FROM us-west1-docker.pkg.dev/isv-tile-partners/partner-engineering/base-image:0.0.45
 ARG DEPENDENCIES_FILE=/root/dependencies.log
 
 # Copy binaries from dependent images
